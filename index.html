@@ -263,6 +263,26 @@ span[data-k],.stat b span[data-k],.top2 b span[data-k]{display:inline;font-size:
 .src .ic{--icon:14px;width:14px;height:14px;flex-basis:14px;margin-top:2px}
 .src b{font-weight:400;color:var(--ink-2);margin-right:2px}
 @media (min-width:641px){.src{padding-right:110px}}
+.agenda-c .fact{font-size:16px;color:var(--ink-2)}
+.agenda-c .fact b{font-weight:400;font-size:26px;font-variant-numeric:tabular-nums}
+.agenda-c .ask{margin-top:6px;color:var(--ink)}
+.q-add{display:grid;grid-template-columns:auto 1fr auto;gap:8px;align-items:center}
+@media (max-width:640px){.q-add{grid-template-columns:1fr auto}.q-add .tabs{grid-column:1/-1}}
+.q-add .btn{white-space:nowrap}
+.q-list{list-style:none;display:grid;gap:8px;margin-top:12px}
+.q-list li{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:start;background:var(--muted);border-radius:12px;padding:12px}
+.q-list li.done .q-text{color:var(--sub);text-decoration:line-through}
+.q-kind{font-size:12px;padding:1px 8px;border-radius:999px;background:var(--surface);border:1px solid var(--line);color:var(--sub);margin-right:6px;white-space:nowrap}
+.q-text{color:var(--ink)}
+.q-meta{font-size:12px;color:var(--sub)}
+.q-ans{margin-top:8px}
+.q-ans textarea{font-size:14px}
+.q-ans p{font-size:14px;color:var(--ink-2);white-space:pre-wrap;border-left:2px solid var(--accent-line);padding-left:10px}
+.q-check{width:20px;height:20px;margin-top:3px;accent-color:var(--accent)}
+.q-list .ib{width:34px;height:34px;border-radius:10px}
+.viewonly{display:none;font-size:13.5px;color:var(--sub);background:var(--muted);border-radius:10px;padding:8px 12px;margin-bottom:10px}
+body.readonly .viewonly{display:block}
+body.readonly .admin-only{display:none!important}
 /* responsive */
 .scrim{display:none}
 @media (max-width:1099px){
@@ -333,8 +353,9 @@ span[data-k],.stat b span[data-k],.top2 b span[data-k]{display:inline;font-size:
     <div class="side-head"><small>고흥 관내 중3 담임 협의회</small><b>2027학년도<br>관내 고입 진학지도</b></div>
     <nav class="menu" id="menu"></nav>
     <div class="side-foot">
-      <button class="btn sm" id="sideExport" type="button"><svg class="ic"><use href="#i-down"/></svg>내보내기</button>
-      <button class="btn sm" id="sideImport" type="button"><svg class="ic"><use href="#i-up"/></svg>불러오기</button>
+      <button class="btn sm" id="btnLogin" type="button" style="grid-column:1/-1" hidden><svg class="ic"><use href="#i-shield"/></svg><span>관리자 로그인</span></button>
+      <button class="btn sm admin-only" id="sideExport" type="button"><svg class="ic"><use href="#i-down"/></svg>내보내기</button>
+      <button class="btn sm admin-only" id="sideImport" type="button"><svg class="ic"><use href="#i-up"/></svg>불러오기</button>
     </div>
   </aside>
   <div class="scrim" id="scrim"></div>
@@ -752,13 +773,24 @@ span[data-k],.stat b span[data-k],.top2 b span[data-k]{display:inline;font-size:
   <div class="wrap">
     <span class="kicker">함께 협의</span>
     <h2>오늘 정할 것</h2>
-    <p class="lead">관내 중학교가 같은 기준으로 지도할 수 있도록 의견을 모아요. 결정한 내용은 '메모·공지'에 바로 적어 두세요.</p>
     <div class="grid g3">
-      <div class="card"><div class="label"><svg class="ic"><use href="#i-school"/></svg>1. 고흥고 지도 기준</div><p style="color:var(--ink-2)">일반전형 희망자 <span class="key"><span data-k="gh_gen">105</span>명</span>, 정원 <span data-k="gh_cap">113</span>명. 관외·미정 학생이 고흥고로 오면 바뀌어요. 석차백분율 몇 %까지를 안정권으로 안내할지 정해요.</p></div>
-      <div class="card"><div class="label"><svg class="ic"><use href="#i-users"/></svg>2. 사회통합 대상자</div><p style="color:var(--ink-2)">정원은 고흥고 6, 녹동고 4, 산과고 학과별 1, 도화고 1명. 지금 고흥고 사회통합 희망자는 <span class="key"><span data-k="gh_soc">4</span>명</span>이에요. 대상자 확인 방법과 권장 기준을 정해요.</p></div>
-      <div class="card"><div class="label"><svg class="ic"><use href="#i-list"/></svg>3. 희망 조사 정리</div><p style="color:var(--ink-2)">두 곳으로 입력된 학생과 미정 학생의 확정 시점, 시트 수정 방법을 정해요.</p></div>
+      <div class="card agenda-c"><div class="label"><svg class="ic"><use href="#i-school"/></svg>1. 고흥고 지도 기준</div><p class="fact">일반전형 <b class="key"><span data-k="gh_gen">105</span></b> / <span data-k="gh_cap">113</span>명</p><p class="ask">안정권 석차는 몇 %까지?</p></div>
+      <div class="card agenda-c"><div class="label"><svg class="ic"><use href="#i-users"/></svg>2. 사회통합 대상자</div><p class="fact">표시된 학생 <b class="key"><span data-k="gh_soc">4</span></b>명</p><p class="ask">학교별 재확인, 권장 기준은?</p></div>
+      <div class="card agenda-c"><div class="label"><svg class="ic"><use href="#i-list"/></svg>3. 희망 조사 정리</div><p class="fact">중복·미정 학생 있음</p><p class="ask">확정 시점과 수정 방법은?</p></div>
     </div>
-    <div class="actions mt"><button class="btn primary" type="button" data-go="s-memo"><svg class="ic"><use href="#i-note"/></svg>결정 내용 적으러 가기</button></div>
+    <div class="card mt">
+      <div class="label"><svg class="ic"><use href="#i-chat"/></svg>추가 안건 · 질문</div>
+      <p class="viewonly">보기 전용이에요. 관리자만 적고 고칠 수 있어요.</p>
+      <div class="q-add admin-only">
+        <div class="tabs" role="radiogroup" aria-label="구분" id="qKind" style="margin:0">
+          <button class="tab" type="button" role="radio" aria-checked="true" data-kind="agenda" aria-selected="true">추가 안건</button>
+          <button class="tab" type="button" role="radio" aria-checked="false" data-kind="question" aria-selected="false">질문</button>
+        </div>
+        <input type="text" id="newQ" maxlength="1000" placeholder="선생님들께 나온 안건이나 궁금한 점을 바로 적어요" aria-label="추가 안건 또는 질문">
+        <button class="btn primary" id="addQ" type="button"><svg class="ic"><use href="#i-plus"/></svg>추가</button>
+      </div>
+      <ul class="q-list" id="qList"></ul>
+    </div>
   </div>
 </section>
 
@@ -772,7 +804,7 @@ span[data-k],.stat b span[data-k],.top2 b span[data-k]{display:inline;font-size:
       <div class="card">
         <div class="field"><label for="notice"><span style="display:inline-flex;align-items:center;gap:6px"><svg class="ic" style="--icon:17px;width:17px;height:17px"><use href="#i-bell"/></svg>공지사항 (모든 화면 위쪽에 표시)</span></label><textarea id="notice" rows="3" maxlength="2000" placeholder="예) 산과고 원서 마감 11.26.(목) 17:00"></textarea></div>
         <div class="field mt"><label for="newMemo">메모 추가</label>
-          <div class="memo-add"><input type="text" id="newMemo" maxlength="1000" placeholder="협의 중 나온 내용을 적어요"><button class="btn primary" id="addMemo" type="button"><svg class="ic"><use href="#i-plus"/></svg>추가</button></div>
+          <div class="memo-add admin-only"><input type="text" id="newMemo" maxlength="1000" placeholder="협의 중 나온 내용을 적어요"><button class="btn primary" id="addMemo" type="button"><svg class="ic"><use href="#i-plus"/></svg>추가</button></div>
         </div>
         <ul class="memo-list" id="memoList"></ul>
       </div>
@@ -784,7 +816,8 @@ span[data-k],.stat b span[data-k],.top2 b span[data-k]{display:inline;font-size:
         <p class="saved mt" id="savedAt">아직 저장된 내용이 없어요.</p>
       </div>
     </div>
-    <div class="actions mt">
+    <p class="viewonly mt">보기 전용이에요. 메모와 공지는 관리자만 고칠 수 있어요.</p>
+    <div class="actions mt admin-only">
       <button class="btn primary" id="btnExport" type="button"><svg class="ic"><use href="#i-down"/></svg>JSON 내보내기</button>
       <button class="btn" id="btnImport" type="button"><svg class="ic"><use href="#i-up"/></svg>JSON 불러오기</button>
       <button class="btn" id="btnClear" type="button"><svg class="ic"><use href="#i-trash"/></svg>모두 지우기</button>
@@ -818,6 +851,8 @@ window.APP_CONFIG = {
   // 구글 시트 '공개 집계' 탭을 [파일 > 공유 > 웹에 게시 > CSV]로 게시한 주소
   sheetCsvUrl: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQFGmppXpR0bta62os-ZYjK5E7tro_IyZYogS9EziUgomb9DgC0sanJDZXBoFuNN8C6qAOda7sZYRjH/pub?gid=777001&single=true&output=csv',
   sheetRefreshMinutes: 5,
+  // 관리자(메모·공지·안건을 고칠 수 있는 사람) 구글 계정 이메일의 SHA-256 값. 이메일 자체는 페이지에 드러나지 않아요.
+  adminEmailSha256: '6f539399d8d506aa971681769ce0f14cad3fe275d7dc794ee8e4de916d2a1175',
   // 파이어베이스 콘솔 > 프로젝트 설정 > 내 앱(웹)에서 복사한 firebaseConfig. 비워 두면 이 브라우저에만 저장돼요.
   firebase: {
     apiKey: "AIzaSyCQOwCL6NJuXAXp-7-MWsjE9xckWHX65I0",
@@ -986,26 +1021,43 @@ window.APP_CONFIG = {
 
   /* ---------- state ---------- */
   const KEY='goheung-hs-council-v1', SCHEMA='goheung-hs-council', VERSION=1;
-  const blank=()=>({schema:SCHEMA,version:VERSION,savedAt:null,notice:'',memos:[],decisions:{cut:'',social:'',survey:''}});
+  const blank=()=>({schema:SCHEMA,version:VERSION,savedAt:null,notice:'',memos:[],decisions:{cut:'',social:'',survey:''},questions:[]});
+  const norm=o=>{if(!Array.isArray(o.questions))o.questions=[];return o};
+  let canEdit=true;
   let state=blank(); let remoteOn=false;
-  try{const raw=localStorage.getItem(KEY);if(raw){const p=JSON.parse(raw);if(!validate(p).length)state=p}}catch(e){}
+  try{const raw=localStorage.getItem(KEY);if(raw){const p=JSON.parse(raw);if(!validate(p).length)state=norm(p)}}catch(e){}
   const els={notice:$('#notice'),cut:$('#d-cut'),social:$('#d-social'),survey:$('#d-survey')};
-  function persist(fromRemote){if(!fromRemote)state.savedAt=new Date().toISOString();try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){}renderSaved();renderNotice();if(!fromRemote)pushRemote()}
+  function persist(fromRemote){if(!fromRemote&&!canEdit)return;if(!fromRemote)state.savedAt=new Date().toISOString();try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){}renderSaved();renderNotice();if(!fromRemote)pushRemote()}
   let pushRemote=()=>{};
   function renderSaved(){const el=$('#savedAt');if(!state.savedAt){el.textContent='아직 저장된 내용이 없어요.';return}const d=new Date(state.savedAt);el.textContent='마지막 저장 '+d.toLocaleString('ko-KR',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'})+(remoteOn?' · 파이어베이스에 저장됨':' · 이 브라우저에만 저장돼요')}
   function renderNotice(){const t=state.notice.trim();$('#noticeBar').classList.toggle('on',!!t);$('#noticeText').textContent=t}
   function renderMemos(){
     const ul=$('#memoList');
     if(!state.memos.length){ul.innerHTML='<li class="empty" style="background:none;display:block">아직 메모가 없어요.</li>';return}
-    ul.innerHTML=state.memos.map(m=>'<li><div><p>'+esc(m.text)+'</p><small>'+new Date(m.createdAt).toLocaleString('ko-KR',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'})+'</small></div><button class="ib" type="button" data-del="'+esc(m.id)+'" aria-label="메모 삭제" data-tip="메모 삭제"><svg class="ic"><use href="#i-trash"/></svg></button></li>').join('');
+    ul.innerHTML=state.memos.map(m=>'<li><div><p>'+esc(m.text)+'</p><small>'+new Date(m.createdAt).toLocaleString('ko-KR',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'})+'</small></div>'+(canEdit?'<button class="ib" type="button" data-del="'+esc(m.id)+'" aria-label="메모 삭제" data-tip="메모 삭제"><svg class="ic"><use href="#i-trash"/></svg></button>':'<span></span>')+'</li>').join('');
     $$('[data-del]',ul).forEach(b=>b.onclick=()=>{
       const id=b.dataset.del;
       modal({title:'이 메모를 지울까요?',icon:'trash',body:'<p>지운 메모는 되돌릴 수 없어요.</p>',primary:'지우기',onPrimary:()=>{state.memos=state.memos.filter(m=>m.id!==id);persist();renderMemos();toast('메모를 지웠어요')}});
     });
   }
-  function fill(){els.notice.value=state.notice;els.cut.value=state.decisions.cut;els.social.value=state.decisions.social;els.survey.value=state.decisions.survey;renderMemos();renderSaved();renderNotice()}
+  const tFmt=d=>new Date(d).toLocaleString('ko-KR',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'});
+  let qKind='agenda';
+  $$('#qKind [data-kind]').forEach(b=>b.onclick=()=>{qKind=b.dataset.kind;$$('#qKind [data-kind]').forEach(x=>{const on=x===b;x.setAttribute('aria-checked',on);x.setAttribute('aria-selected',on)})});
+  function renderQuestions(){
+    const ul=$('#qList');
+    if(!state.questions.length){ul.innerHTML='<li class="empty" style="background:none;display:block">아직 적힌 안건이나 질문이 없어요.</li>';return}
+    ul.innerHTML=state.questions.map(q=>'<li class="'+(q.done?'done':'')+'"><input type="checkbox" class="q-check" data-qdone="'+esc(q.id)+'" '+(q.done?'checked ':'')+(canEdit?'':'disabled ')+'aria-label="확인 완료"><div><div><span class="q-kind">'+(q.kind==='agenda'?'추가 안건':'질문')+'</span><span class="q-text">'+esc(q.text)+'</span></div><div class="q-meta">'+tFmt(q.createdAt)+(q.done?' · 확인 완료':'')+'</div><div class="q-ans">'+(canEdit?'<textarea rows="1" maxlength="2000" placeholder="답변이나 결정 내용을 적어요" data-qans="'+esc(q.id)+'" aria-label="답변">'+esc(q.answer)+'</textarea>':(q.answer?'<p>'+esc(q.answer)+'</p>':''))+'</div></div>'+(canEdit?'<button class="ib" type="button" data-qdel="'+esc(q.id)+'" aria-label="삭제" data-tip="삭제"><svg class="ic"><use href="#i-trash"/></svg></button>':'<span></span>')+'</li>').join('');
+    $$('[data-qdone]',ul).forEach(c=>c.onchange=()=>{const q=state.questions.find(x=>x.id===c.dataset.qdone);if(q){q.done=c.checked;persist();renderQuestions()}});
+    $$('[data-qans]',ul).forEach(t=>t.addEventListener('input',()=>{const q=state.questions.find(x=>x.id===t.dataset.qans);if(q){q.answer=t.value;clearTimeout(deb);deb=setTimeout(persist,500)}}));
+    $$('[data-qdel]',ul).forEach(b=>b.onclick=()=>{const id=b.dataset.qdel;modal({title:'이 항목을 지울까요?',icon:'trash',body:'<p>지운 안건·질문은 되돌릴 수 없어요.</p>',primary:'지우기',onPrimary:()=>{state.questions=state.questions.filter(x=>x.id!==id);persist();renderQuestions();toast('지웠어요')}})});
+  }
+  function addQ(){if(!canEdit)return;const inp=$('#newQ'),v=inp.value.trim();if(!v){inp.focus();return}state.questions.unshift({id:'q'+Date.now().toString(36)+Math.random().toString(36).slice(2,6),kind:qKind,text:v,answer:'',done:false,createdAt:new Date().toISOString()});inp.value='';persist();renderQuestions()}
+  $('#addQ').onclick=addQ;
+  $('#newQ').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.isComposing){e.preventDefault();addQ()}});
+  function applyEdit(){document.body.classList.toggle('readonly',!canEdit);[els.notice,els.cut,els.social,els.survey].forEach(t=>{t.readOnly=!canEdit});renderMemos();renderQuestions()}
+  function fill(){renderQuestions();els.notice.value=state.notice;els.cut.value=state.decisions.cut;els.social.value=state.decisions.social;els.survey.value=state.decisions.survey;renderMemos();renderSaved();renderNotice()}
   let deb;
-  const bind=(el,set)=>el.addEventListener('input',()=>{set(el.value);clearTimeout(deb);deb=setTimeout(persist,400)});
+  const bind=(el,set)=>el.addEventListener('input',()=>{if(!canEdit)return;set(el.value);clearTimeout(deb);deb=setTimeout(persist,400)});
   bind(els.notice,v=>state.notice=v);
   bind(els.cut,v=>state.decisions.cut=v);
   bind(els.social,v=>state.decisions.social=v);
@@ -1019,7 +1071,7 @@ window.APP_CONFIG = {
   function validate(o){
     const E=[];
     if(!o||typeof o!=='object'||Array.isArray(o)){return['최상위 값이 객체({ … })가 아니에요.']}
-    const allowed=['schema','version','savedAt','notice','memos','decisions'];
+    const allowed=['schema','version','savedAt','notice','memos','decisions','questions'];
     Object.keys(o).forEach(k=>{if(!allowed.includes(k))E.push('알 수 없는 항목 "'+k+'"이 있어요.')});
     if(o.schema!==SCHEMA)E.push('schema 값이 "'+SCHEMA+'"이어야 해요.');
     if(o.version!==VERSION)E.push('version은 '+VERSION+'이어야 해요. (지금: '+JSON.stringify(o.version)+')');
@@ -1037,6 +1089,23 @@ window.APP_CONFIG = {
         if(!isISO(m.createdAt))E.push(p+'.createdAt은 날짜·시간 문자열(ISO 형식)이어야 해요.');
         Object.keys(m).forEach(k=>{if(!['id','text','createdAt'].includes(k))E.push(p+'에 알 수 없는 항목 "'+k+'"이 있어요.')});
       });
+    }
+    if(o.questions!==undefined){
+      if(!Array.isArray(o.questions))E.push('questions는 배열([ … ])이어야 해요.');
+      else{
+        if(o.questions.length>200)E.push('questions는 200개 이하여야 해요.');
+        o.questions.forEach((q,i)=>{
+          const p='questions['+i+']';
+          if(!q||typeof q!=='object'||Array.isArray(q)){E.push(p+'이 객체가 아니에요.');return}
+          if(typeof q.id!=='string'||!q.id)E.push(p+'.id는 비어 있지 않은 문자열이어야 해요.');
+          if(q.kind!=='agenda'&&q.kind!=='question')E.push(p+'.kind는 "agenda" 또는 "question"이어야 해요.');
+          if(typeof q.text!=='string'||!q.text.trim())E.push(p+'.text는 비어 있지 않은 문자열이어야 해요.');else if(q.text.length>1000)E.push(p+'.text는 1,000자 이하여야 해요.');
+          if(typeof q.answer!=='string')E.push(p+'.answer는 문자열이어야 해요.');else if(q.answer.length>2000)E.push(p+'.answer는 2,000자 이하여야 해요.');
+          if(typeof q.done!=='boolean')E.push(p+'.done은 true 또는 false여야 해요.');
+          if(!isISO(q.createdAt))E.push(p+'.createdAt은 날짜·시간 문자열(ISO 형식)이어야 해요.');
+          Object.keys(q).forEach(x=>{if(!['id','kind','text','answer','done','createdAt'].includes(x))E.push(p+'에 알 수 없는 항목 "'+x+'"이 있어요.')});
+        });
+      }
     }
     if(!o.decisions||typeof o.decisions!=='object'||Array.isArray(o.decisions))E.push('decisions는 객체여야 해요.');
     else ['cut','social','survey'].forEach(k=>{const v=o.decisions[k];if(typeof v!=='string')E.push('decisions.'+k+'는 문자열이어야 해요.');else if(v.length>2000)E.push('decisions.'+k+'는 2,000자 이하여야 해요.')});
@@ -1068,7 +1137,7 @@ window.APP_CONFIG = {
       if(!txt){show(['불러올 내용이 없어요. 파일을 고르거나 붙여 넣어 주세요.']);return false}
       let o;try{o=JSON.parse(txt)}catch(e){show(['JSON 형식이 올바르지 않아요: '+e.message]);return false}
       const E=validate(o);if(E.length){show(E);return false}
-      setTimeout(()=>modal({title:'지금 내용을 덮어쓸까요?',icon:'alert',body:'<p>메모 '+o.memos.length+'개와 공지·결정 내용을 불러와 지금 내용을 바꿔요. 되돌릴 수 없으니 필요하면 먼저 내보내기를 해 두세요.</p>',primary:'덮어쓰기',onPrimary:()=>{state=o;persist();fill();toast('불러왔어요')}}),0);
+      setTimeout(()=>modal({title:'지금 내용을 덮어쓸까요?',icon:'alert',body:'<p>메모 '+o.memos.length+'개와 공지·결정 내용을 불러와 지금 내용을 바꿔요. 되돌릴 수 없으니 필요하면 먼저 내보내기를 해 두세요.</p>',primary:'덮어쓰기',onPrimary:()=>{state=norm(o);persist();fill();toast('불러왔어요')}}),0);
     }});
   }
   $('#btnImport').onclick=importJSON; $('#sideImport').onclick=()=>{closeDrawer();importJSON()};
@@ -1106,11 +1175,27 @@ window.APP_CONFIG = {
       const V='10.12.2';
       const {initializeApp}=await import('https://www.gstatic.com/firebasejs/'+V+'/firebase-app.js');
       const F=await import('https://www.gstatic.com/firebasejs/'+V+'/firebase-firestore.js');
-      const db=F.getFirestore(initializeApp(CFG.firebase));
+      const app=initializeApp(CFG.firebase);
+      const db=F.getFirestore(app);
+      const A=await import('https://www.gstatic.com/firebasejs/'+V+'/firebase-auth.js');
+      const auth=A.getAuth(app);
+      const loginBtn=$('#btnLogin');loginBtn.hidden=false;
+      const sha=async t=>{const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(t));return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')};
+      A.onAuthStateChanged(auth,async u=>{
+        let ok=false;
+        if(u&&u.email&&u.emailVerified){try{ok=(await sha(u.email.trim().toLowerCase()))===CFG.adminEmailSha256}catch(e){}}
+        canEdit=ok;applyEdit();
+        loginBtn.querySelector('span').textContent=u?(ok?'관리자 로그아웃':'로그아웃 (관리자 아님)'):'관리자 로그인';
+        if(u&&!ok)toast('관리자 계정이 아니에요. 보기 전용으로 열려요.');
+      });
+      loginBtn.onclick=()=>{
+        if(auth.currentUser){modal({title:'로그아웃할까요?',icon:'shield',body:'<p>로그아웃하면 보기 전용으로 바뀌어요.</p>',primary:'로그아웃',onPrimary:()=>{A.signOut(auth).then(()=>toast('로그아웃했어요'))}});return}
+        A.signInWithPopup(auth,new A.GoogleAuthProvider()).catch(e=>{if(e.code!=='auth/popup-closed-by-user'&&e.code!=='auth/cancelled-popup-request')toast('로그인 실패: '+(e.code||e.message))});
+      };
       const ref=F.doc(db,'councils',String(CFG.room||'default'));
       let t;
       pushRemote=()=>{clearTimeout(t);t=setTimeout(()=>{
-        const payload={schema:SCHEMA,version:VERSION,savedAt:state.savedAt,notice:state.notice,memos:state.memos,decisions:state.decisions};
+        if(!canEdit)return;const payload={schema:SCHEMA,version:VERSION,savedAt:state.savedAt,notice:state.notice,memos:state.memos,decisions:state.decisions,questions:state.questions};
         F.setDoc(ref,payload).then(()=>chip('#chipDb','실시간 저장','ok')).catch(e=>{chip('#chipDb','저장 실패','err');toast('파이어베이스 저장 실패: '+(e.code||e.message))});
       },600)};
       F.onSnapshot(ref,snap=>{
@@ -1121,18 +1206,19 @@ window.APP_CONFIG = {
         if(validate(o).length){toast('서버의 메모 형식이 올바르지 않아 무시했어요');return}
         if(state.savedAt&&o.savedAt&&Date.parse(o.savedAt)<Date.parse(state.savedAt))return;
         const active=document.activeElement;
-        state=o;persist(true);
+        state=norm(o);persist(true);
         if(active!==els.notice)els.notice.value=state.notice;
         if(active!==els.cut)els.cut.value=state.decisions.cut;
         if(active!==els.social)els.social.value=state.decisions.social;
         if(active!==els.survey)els.survey.value=state.decisions.survey;
-        renderMemos();
+        renderMemos();renderQuestions();
       },e=>{chip('#chipDb','연결 오류','err');toast('파이어베이스 연결 오류: '+(e.code||e.message))});
     }catch(e){chip('#chipDb','연결 오류','err');toast('파이어베이스를 불러오지 못했어요')}
   }
+  if(CFG.firebase&&CFG.firebase.projectId){canEdit=false}
   connectFirebase();
 
-  fill();
+  fill();applyEdit();
   function fromHash(){const k=slides.findIndex(s=>'#'+s.id===location.hash);go(k<0?0:k,true)}
   window.addEventListener('hashchange',fromHash);
   fromHash();

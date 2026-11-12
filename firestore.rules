@@ -3,16 +3,21 @@ service cloud.firestore {
   match /databases/{database}/documents {
 
     // 협의회 메모 문서: councils/{방 이름}
+    // 읽기: 누구나 / 쓰기: 관리자 구글 계정만
     match /councils/{room} {
       allow read: if true;
-      allow write: if request.resource.data.keys().hasOnly(['schema', 'version', 'savedAt', 'notice', 'memos', 'decisions'])
+      allow write: if request.auth != null
+        && request.auth.token.email == 'supreme915@gmail.com'
+        && request.auth.token.email_verified == true
+        && request.resource.data.keys().hasOnly(['schema', 'version', 'savedAt', 'notice', 'memos', 'decisions', 'questions'])
         && request.resource.data.schema == 'goheung-hs-council'
         && request.resource.data.version == 1
         && request.resource.data.notice is string
         && request.resource.data.notice.size() <= 2000
         && request.resource.data.memos is list
         && request.resource.data.memos.size() <= 200
-        && request.resource.data.decisions is map;
+        && request.resource.data.decisions is map
+        && (!('questions' in request.resource.data) || (request.resource.data.questions is list && request.resource.data.questions.size() <= 200));
     }
 
     // 그 밖의 모든 경로는 막아 둡니다.
