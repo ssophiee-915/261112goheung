@@ -259,6 +259,10 @@ textarea:focus,input[type=text]:focus{outline:2px solid var(--accent);outline-of
 .chip.err{color:#7a2e20;border-color:#e3c3bd}
 @media (max-width:760px){.chip span{display:none}.chip{padding:6px}}
 span[data-k],.stat b span[data-k],.top2 b span[data-k]{display:inline;font-size:inherit;color:inherit;margin:0;padding:0}
+.src{margin-top:28px;display:flex;justify-content:flex-end;gap:6px;align-items:flex-start;font-size:12px;line-height:1.5;color:var(--sub);opacity:.85;text-align:right}
+.src .ic{--icon:14px;width:14px;height:14px;flex-basis:14px;margin-top:2px}
+.src b{font-weight:400;color:var(--ink-2);margin-right:2px}
+@media (min-width:641px){.src{padding-right:110px}}
 /* responsive */
 .scrim{display:none}
 @media (max-width:1099px){
@@ -351,7 +355,7 @@ span[data-k],.stat b span[data-k],.top2 b span[data-k]{display:inline;font-size:
       <div class="track" id="track">
 
 <!-- 1 시작 -->
-<section class="slide" id="s-start" data-title="시작" data-group="기본 안내" data-icon="home">
+<section class="slide" id="s-start" data-src="고흥고·녹동고·고흥산업과학고·고흥도화고 2027 입학전형 요강 · 2027 전남 고입전형 기본계획" data-title="시작" data-group="기본 안내" data-icon="home">
   <div class="wrap cover">
     <span class="kicker">고흥 관내 중학교 3학년 담임 협의회</span>
     <h2>2027학년도<br><span class="key">관내 고입 진학지도</span></h2>
@@ -365,7 +369,7 @@ span[data-k],.stat b span[data-k],.top2 b span[data-k]{display:inline;font-size:
 </section>
 
 <!-- 2 고입 한눈에 -->
-<section class="slide" id="s-overview" data-title="고입 한눈에" data-group="기본 안내" data-icon="map">
+<section class="slide" id="s-overview" data-src="고흥고·녹동고·고흥산업과학고·고흥도화고 2027 입학전형 요강 · 2027 전남 고입전형 설명 자료 (중3 학생 수·모집정원·관내 진학률)" data-title="고입 한눈에" data-group="기본 안내" data-icon="map">
   <div class="wrap">
     <span class="kicker">고입 기본 구조</span>
     <h2>전기와 후기, 두 번에 나눠 뽑아요</h2>
@@ -387,12 +391,12 @@ span[data-k],.stat b span[data-k],.top2 b span[data-k]{display:inline;font-size:
       <div class="card"><div class="label">관내 고교 모집정원</div><div class="big">290<small>명</small></div><p class="note">4개교 15학급. 중3 학생 수와 거의 같아요.</p></div>
       <div class="card"><div class="label">작년 관내 진학률</div><div class="big">80.4<small>%</small></div><p class="note">졸업생 316명 중 254명이 관내로, 62명이 다른 시군·시도로 갔어요.</p></div>
     </div>
-    <p class="note hide-sm">출처: 2027학년도 전남광주통합특별시(종전 전라남도) 고입전형 설명 자료</p>
+    
   </div>
 </section>
 
 <!-- 3 일정 -->
-<section class="slide" id="s-schedule" data-title="일정" data-group="기본 안내" data-icon="clock">
+<section class="slide" id="s-schedule" data-src="고흥고·녹동고·고흥산업과학고·고흥도화고 2027 입학전형 요강 · 2027 전남 고입전형 설명 자료 (전형 일정)" data-title="일정" data-group="기본 안내" data-icon="clock">
   <div class="wrap">
     <span class="kicker">고입 일정</span>
     <h2>전기와 후기, 날짜가 달라요</h2>
@@ -423,7 +427,7 @@ span[data-k],.stat b span[data-k],.top2 b span[data-k]{display:inline;font-size:
 </section>
 
 <!-- 4 캘린더 -->
-<section class="slide" id="s-calendar" data-title="남은 일정 캘린더" data-group="기본 안내" data-icon="cal">
+<section class="slide" id="s-calendar" data-src="고흥고·녹동고·고흥산업과학고·고흥도화고 2027 입학전형 요강 · 2027 전남 고입전형 설명 자료 (전형 일정)" data-title="남은 일정 캘린더" data-group="기본 안내" data-icon="cal">
   <div class="wrap">
     <span class="kicker">오늘부터 등록까지</span>
     <h2>남은 일정 캘린더</h2>
@@ -443,7 +447,7 @@ span[data-k],.stat b span[data-k],.top2 b span[data-k]{display:inline;font-size:
 </section>
 
 <!-- 5 내신 -->
-<section class="slide" id="s-score" data-title="내신 이해" data-group="기본 안내" data-icon="chart">
+<section class="slide" id="s-score" data-src="2027 전남 고입전형 기본계획 (중학교 내신 성적 산출 지침) · 고흥고·녹동고·고흥산업과학고·고흥도화고 2027 입학전형 요강 (기준일·동점자 처리)" data-title="내신 이해" data-group="기본 안내" data-icon="chart">
   <div class="wrap">
     <span class="kicker">중학교 내신 성적</span>
     <h2>300점 만점, 석차백분율로 줄 세워요</h2>
@@ -489,7 +493,7 @@ span[data-k],.stat b span[data-k],.top2 b span[data-k]{display:inline;font-size:
 </section>
 
 <!-- 6 관내 고교 -->
-<section class="slide" id="s-schools" data-title="관내 고교" data-group="관내 고교와 담임 업무" data-icon="school">
+<section class="slide" id="s-schools" data-src="고흥고·녹동고·고흥산업과학고·고흥도화고 2027 입학전형 요강" data-title="관내 고교" data-group="관내 고교와 담임 업무" data-icon="school">
   <div class="wrap">
     <span class="kicker">관내 고등학교 모집 요강</span>
     <h2>네 학교, 한눈에</h2>
@@ -534,7 +538,7 @@ span[data-k],.stat b span[data-k],.top2 b span[data-k]{display:inline;font-size:
 </section>
 
 <!-- 7 NEIS -->
-<section class="slide" id="s-neis" data-title="NEIS 한눈에" data-group="관내 고교와 담임 업무" data-icon="monitor">
+<section class="slide" id="s-neis" data-src="2027 NEIS 고입 시스템 매뉴얼(중학교)" data-title="NEIS 한눈에" data-group="관내 고교와 담임 업무" data-icon="monitor">
   <div class="wrap">
     <span class="kicker">NEIS 기반 고입 시스템 · 중학교</span>
     <h2>NEIS 업무 처리 한눈에</h2>
@@ -575,12 +579,12 @@ span[data-k],.stat b span[data-k],.top2 b span[data-k]{display:inline;font-size:
         </ol>
       </div>
     </div>
-    <p class="note hide-sm">출처: 2027학년도 고등학교 입(진)학 NEIS 기반 고입 시스템 매뉴얼(중학교)</p>
+    
   </div>
 </section>
 
 <!-- 8 상담 -->
-<section class="slide" id="s-counsel" data-title="상담 포인트" data-group="관내 고교와 담임 업무" data-icon="chat">
+<section class="slide" id="s-counsel" data-src="고흥고·녹동고·고흥산업과학고·고흥도화고 2027 입학전형 요강 · 2027 전남 고입전형 기본계획" data-title="상담 포인트" data-group="관내 고교와 담임 업무" data-icon="chat">
   <div class="wrap">
     <span class="kicker">학생·학부모 상담</span>
     <h2>상담할 때 꼭 짚을 것</h2>
@@ -595,7 +599,7 @@ span[data-k],.stat b span[data-k],.top2 b span[data-k]{display:inline;font-size:
 </section>
 
 <!-- 9 사회통합 -->
-<section class="slide" id="s-social" data-title="사회통합 전형" data-group="관내 고교와 담임 업무" data-icon="users">
+<section class="slide" id="s-social" data-src="2027 전남 고입전형 기본계획 (사회통합전형 기본계획) · 고흥고·녹동고·고흥산업과학고·고흥도화고 2027 입학전형 요강" data-title="사회통합 전형" data-group="관내 고교와 담임 업무" data-icon="users">
   <div class="wrap">
     <span class="kicker">사회통합 전형</span>
     <h2>누가 쓸 수 있고, 무엇을 내나요</h2>
@@ -647,7 +651,7 @@ span[data-k],.stat b span[data-k],.top2 b span[data-k]{display:inline;font-size:
 </section>
 
 <!-- 10 정원 외 -->
-<section class="slide" id="s-extra" data-title="정원 외 전형" data-group="관내 고교와 담임 업무" data-icon="shield">
+<section class="slide" id="s-extra" data-src="고흥고·녹동고·고흥산업과학고·고흥도화고 2027 입학전형 요강" data-title="정원 외 전형" data-group="관내 고교와 담임 업무" data-icon="shield">
   <div class="wrap">
     <span class="kicker">정원 외 전형</span>
     <h2>해당 학생이 있는지 미리 확인해요</h2>
@@ -665,7 +669,7 @@ span[data-k],.stat b span[data-k],.top2 b span[data-k]{display:inline;font-size:
 </section>
 
 <!-- 11 실수 -->
-<section class="slide" id="s-mistakes" data-title="자주 하는 실수" data-group="관내 고교와 담임 업무" data-icon="alert">
+<section class="slide" id="s-mistakes" data-src="2027 전남 고입전형 기본계획 · 고흥고·녹동고·고흥산업과학고·고흥도화고 2027 입학전형 요강 · 2027 NEIS 고입 시스템 매뉴얼(중학교)" data-title="자주 하는 실수" data-group="관내 고교와 담임 업무" data-icon="alert">
   <div class="wrap">
     <span class="kicker">놓치기 쉬운 것</span>
     <h2>이런 실수, 미리 막아요</h2>
@@ -682,7 +686,7 @@ span[data-k],.stat b span[data-k],.top2 b span[data-k]{display:inline;font-size:
 </section>
 
 <!-- 12 유의사항 -->
-<section class="slide" id="s-notes" data-title="유의사항" data-group="관내 고교와 담임 업무" data-icon="flag">
+<section class="slide" id="s-notes" data-src="2027 전남 고입전형 기본계획 · 고흥고·녹동고·고흥산업과학고·고흥도화고 2027 입학전형 요강" data-title="유의사항" data-group="관내 고교와 담임 업무" data-icon="flag">
   <div class="wrap">
     <span class="kicker">유의사항</span>
     <h2>놓치면 되돌릴 수 없는 것</h2>
@@ -698,7 +702,7 @@ span[data-k],.stat b span[data-k],.top2 b span[data-k]{display:inline;font-size:
 </section>
 
 <!-- 13 희망자 -->
-<section class="slide" id="s-status" data-title="희망자 현황" data-group="함께 협의" data-icon="chart">
+<section class="slide" id="s-status" data-src="2027 진학 희망 조사 공유 시트 ('전체고교 수합'·'공개 집계' 탭) · 교육청 진학 희망 조사(2026. 11. 6. 기준)" data-title="희망자 현황" data-group="함께 협의" data-icon="chart">
   <div class="wrap">
     <span class="kicker">진학 희망 조사 · 시트 <span data-k="updated">11. 12.</span> 기준</span>
     <h2>일반전형과 사회통합, 나눠서 봐요</h2>
@@ -744,7 +748,7 @@ span[data-k],.stat b span[data-k],.top2 b span[data-k]{display:inline;font-size:
 </section>
 
 <!-- 14 협의 안건 -->
-<section class="slide" id="s-discuss" data-title="협의 안건" data-group="함께 협의" data-icon="users">
+<section class="slide" id="s-discuss" data-src="2027 진학 희망 조사 공유 시트 · 고흥고·녹동고·고흥산업과학고·고흥도화고 2027 입학전형 요강" data-title="협의 안건" data-group="함께 협의" data-icon="users">
   <div class="wrap">
     <span class="kicker">함께 협의</span>
     <h2>오늘 정할 것</h2>
@@ -759,7 +763,7 @@ span[data-k],.stat b span[data-k],.top2 b span[data-k]{display:inline;font-size:
 </section>
 
 <!-- 15 메모 -->
-<section class="slide" id="s-memo" data-title="메모 · 공지" data-group="함께 협의" data-icon="note">
+<section class="slide" id="s-memo" data-src="협의회에서 입력한 내용" data-title="메모 · 공지" data-group="함께 협의" data-icon="note">
   <div class="wrap">
     <span class="kicker">협의 기록</span>
     <h2>메모와 공지</h2>
@@ -842,6 +846,7 @@ window.APP_CONFIG = {
   const today=new Date(); today.setHours(0,0,0,0);
   const esc=t=>String(t).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
+  slides.forEach(s=>{if(!s.dataset.src)return;const w=s.querySelector('.wrap');if(!w)return;const p=document.createElement('p');p.className='src';p.innerHTML='<svg class="ic" aria-hidden="true"><use href="#i-file"/></svg><span><b>출처</b> '+esc(s.dataset.src)+'</span>';w.appendChild(p)});
   /* ---------- sidebar ---------- */
   const groupIcons={'기본 안내':'map','관내 고교와 담임 업무':'school','함께 협의':'users'};
   let lastGroup=null, grpEl=null;
