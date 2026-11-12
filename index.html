@@ -283,6 +283,7 @@ span[data-k],.stat b span[data-k],.top2 b span[data-k]{display:inline;font-size:
 .viewonly{display:none;font-size:13.5px;color:var(--sub);background:var(--muted);border-radius:10px;padding:8px 12px;margin-bottom:10px}
 body.readonly .viewonly{display:block}
 body.readonly .admin-only{display:none!important}
+[hidden]{display:none!important}
 /* responsive */
 .scrim{display:none}
 @media (max-width:1099px){
@@ -1200,7 +1201,7 @@ window.APP_CONFIG = {
           });
           return false;
         };
-        box.querySelector('form').addEventListener('submit',e=>{e.preventDefault();submit()});
+        box.querySelector('form').addEventListener('submit',e=>{e.preventDefault();submit()});pw.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.isComposing){e.preventDefault();submit()}});
         modal({title:'관리자 로그인',icon:'shield',body:box,primary:'로그인',onPrimary:submit});setTimeout(()=>pw.focus(),80);
       };
       const ref=F.doc(db,'councils',String(CFG.room||'default'));
