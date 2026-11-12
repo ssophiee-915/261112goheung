@@ -1189,15 +1189,15 @@ window.APP_CONFIG = {
       loginBtn.onclick=()=>{
         if(auth.currentUser){modal({title:'로그아웃할까요?',icon:'shield',body:'<p>로그아웃하면 보기 전용으로 바뀌어요.</p>',primary:'로그아웃',onPrimary:()=>{A.signOut(auth).then(()=>toast('로그아웃했어요'))}});return}
         const box=document.createElement('div');
-        box.innerHTML='<p>관리자 비밀번호를 입력하세요.</p><form class="drop" autocomplete="on"><input type="text" name="username" autocomplete="username" value="'+esc(CFG.adminLoginEmail||'')+'" hidden><input type="password" id="adminPw" name="password" autocomplete="current-password" aria-label="관리자 비밀번호" placeholder="비밀번호" style="width:100%;border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-size:15px"></form><ul class="errs" aria-live="polite"></ul>';
+        box.innerHTML='<p>관리자 핀번호를 입력하세요.</p><form class="drop" autocomplete="on"><input type="text" name="username" autocomplete="username" value="'+esc(CFG.adminLoginEmail||'')+'" hidden><input type="password" id="adminPw" name="password" inputmode="numeric" autocomplete="current-password" aria-label="관리자 핀번호" placeholder="● ● ● ● ● ●" style="width:100%;border:1px solid var(--line);border-radius:12px;padding:12px;font-size:22px;letter-spacing:.4em;text-align:center"></form><ul class="errs" aria-live="polite"></ul>';
         const pw=box.querySelector('#adminPw'),errs=box.querySelector('.errs');
         let busy=false;
         const submit=()=>{
-          const v=pw.value;if(!v){errs.innerHTML='<li>비밀번호를 입력해 주세요.</li>';return false}
+          const v=pw.value;if(!v){errs.innerHTML='<li>핀번호를 입력해 주세요.</li>';return false}
           if(busy)return false;busy=true;errs.innerHTML='';
           A.signInWithEmailAndPassword(auth,CFG.adminLoginEmail,v).then(()=>{closeModal();toast('관리자로 로그인했어요')}).catch(e=>{
             busy=false;const c=e.code||'';
-            errs.innerHTML='<li>'+(c==='auth/too-many-requests'?'시도가 너무 많아요. 잠시 후 다시 해 주세요.':(c==='auth/network-request-failed'?'인터넷 연결을 확인해 주세요.':'비밀번호가 맞지 않아요.'))+'</li>';pw.select();
+            errs.innerHTML='<li>'+(c==='auth/too-many-requests'?'시도가 너무 많아요. 잠시 후 다시 해 주세요.':(c==='auth/network-request-failed'?'인터넷 연결을 확인해 주세요.':'핀번호가 맞지 않아요.'))+'</li>';pw.select();
           });
           return false;
         };
