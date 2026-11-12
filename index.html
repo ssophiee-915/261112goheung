@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2027학년도 관내 고입 진학지도 협의회</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f3f5f8; --surface:#ffffff; --muted:#eef1f5; --muted-2:#e5e9ef;
+  --ink:#1c2733; --ink-2:#33404e; --sub:#5f6b78; --line:#dfe4ea;
+  --accent:#2b5c8f; --accent-ink:#ffffff; --accent-weak:rgba(43,92,143,.09); --accent-line:rgba(43,92,143,.35);
+  --r:16px; --r-sm:10px;
+  --shadow:0 1px 2px rgba(28,39,51,.05),0 6px 20px rgba(28,39,51,.05);
+  --side:268px;
+  --icon:20px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:"Gowun Dodum","Apple SD Gothic Neo","Malgun Gothic",sans-serif;color:var(--ink);background:var(--bg);line-height:1.6;overflow:hidden;-webkit-font-smoothing:antialiased}
+h1,h2,h3{font-weight:400;letter-spacing:-.015em;-webkit-text-stroke:.35px currentColor}
+button,input,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+
+/* background art (filtered) */
+.bg{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.bg .art{position:absolute;inset:-10%;width:120%;height:120%;filter:saturate(.45) brightness(1.06) blur(36px);opacity:.75}
+.bg .grid{position:absolute;inset:0;width:100%;height:100%;filter:grayscale(1);opacity:.28}
+
+/* icons */
+.ic{width:var(--icon);height:var(--icon);flex:0 0 var(--icon);stroke:currentColor;fill:none;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;display:block}
+
+/* layout */
+.app{position:relative;z-index:1;height:100%;display:grid;grid-template-columns:var(--side) 1fr}
+aside.side{background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border-right:1px solid var(--line);display:flex;flex-direction:column;min-height:0;z-index:30}
+.side-head{padding:20px 20px 14px;border-bottom:1px solid var(--line)}
+.side-head small{display:block;color:var(--sub);font-size:12.5px}
+.side-head b{display:block;font-weight:400;font-size:17px;line-height:1.35;-webkit-text-stroke:.3px currentColor}
+nav.menu{flex:1;overflow-y:auto;padding:10px 12px 16px}
+.grp{margin-top:12px}
+.grp-t{display:flex;align-items:center;gap:8px;padding:6px 10px;font-size:12.5px;color:var(--sub);letter-spacing:.02em}
+.grp-t .ic{--icon:16px;width:16px;height:16px;flex-basis:16px}
+.mi{width:100%;display:flex;align-items:center;gap:10px;padding:9px 10px 9px 14px;margin:1px 0;border:0;background:none;border-radius:var(--r-sm);cursor:pointer;text-align:left;color:var(--ink-2);font-size:15px;position:relative}
+.mi::before{content:"";position:absolute;left:4px;top:9px;bottom:9px;width:3px;border-radius:2px;background:transparent}
+.mi:hover{background:var(--muted)}
+.mi.on{background:var(--accent-weak);color:var(--accent)}
+.mi.on::before{background:var(--accent)}
+.side-foot{padding:12px;border-top:1px solid var(--line);display:grid;grid-template-columns:1fr 1fr;gap:8px}
+
+.main{display:flex;flex-direction:column;min-width:0;min-height:0}
+.top{display:flex;align-items:center;gap:10px;padding:12px clamp(12px,2.6vw,32px);border-bottom:1px solid var(--line);background:rgba(243,245,248,.85);backdrop-filter:blur(6px)}
+.top h1{font-size:clamp(16px,1.6vw,19px);flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.count{font-size:13.5px;color:var(--sub);font-variant-numeric:tabular-nums}
+.progress{height:3px;background:var(--muted-2)}
+.progress i{display:block;height:100%;width:0;background:var(--accent);transition:width .35s ease}
+.notice-bar{display:none;align-items:flex-start;gap:10px;padding:10px clamp(12px,2.6vw,32px);background:var(--surface);border-bottom:1px solid var(--line);font-size:14.5px;color:var(--ink-2)}
+.notice-bar.on{display:flex}
+.notice-bar .ic{color:var(--accent);margin-top:2px}
+.notice-bar span{white-space:pre-wrap}
+
+/* icon buttons + tooltip */
+.ib{position:relative;width:40px;height:40px;display:inline-grid;place-items:center;border-radius:12px;border:1px solid var(--line);background:var(--surface);cursor:pointer;color:var(--ink-2);flex:0 0 auto}
+.ib:hover{background:var(--muted)}
+.ib:disabled{opacity:.35;cursor:default}
+[data-tip]{position:relative}
+[data-tip]::after{content:attr(data-tip);position:absolute;left:50%;top:calc(100% + 8px);transform:translateX(-50%) translateY(-2px);background:var(--ink);color:#fff;font-size:12.5px;line-height:1.3;padding:6px 9px;border-radius:8px;white-space:nowrap;opacity:0;pointer-events:none;transition:.15s;z-index:60}
+[data-tip]:hover::after,[data-tip]:focus-visible::after{opacity:1;transform:translateX(-50%) translateY(0)}
+[data-tip-pos="up"]::after{top:auto;bottom:calc(100% + 8px)}
+.menu-btn{display:none}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:10px 16px;border-radius:12px;border:1px solid var(--line);background:var(--surface);cursor:pointer;font-size:14.5px;color:var(--ink-2)}
+.btn:hover{background:var(--muted)}
+.btn .ic{--icon:18px;width:18px;height:18px;flex-basis:18px}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.primary:hover{filter:brightness(1.07)}
+.btn.sm{padding:8px 12px;font-size:13.5px}
+
+/* stage */
+.stage{flex:1;position:relative;overflow:hidden}
+.track{display:flex;height:100%;transition:transform .45s cubic-bezier(.65,0,.25,1)}
+.slide{flex:0 0 100%;height:100%;overflow-y:auto;padding:clamp(18px,3vw,40px) clamp(14px,4vw,56px) 96px}
+.wrap{max-width:1180px;margin:0 auto}
+.kicker{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--sub);margin-bottom:8px}
+.kicker::before{content:"";width:14px;height:2px;background:var(--line);border-radius:2px}
+.slide h2{font-size:clamp(25px,3.4vw,40px);line-height:1.22;margin-bottom:8px}
+.lead{color:var(--sub);font-size:clamp(15px,1.4vw,17px);margin-bottom:22px;max-width:780px}
+.key{color:var(--accent)}
+
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:clamp(16px,2vw,24px);box-shadow:var(--shadow)}
+.grid{display:grid;gap:14px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr))}
+.g4{grid-template-columns:repeat(auto-fit,minmax(min(100%,190px),1fr))}
+.mt{margin-top:14px}
+.label{display:flex;align-items:center;gap:8px;font-size:16px;margin-bottom:10px;color:var(--ink);-webkit-text-stroke:.25px currentColor}
+.label .ic{color:var(--sub)}
+.big{font-size:clamp(34px,4.4vw,52px);line-height:1;color:var(--accent);font-variant-numeric:tabular-nums}
+.big small{font-size:.38em;color:var(--sub);margin-left:4px}
+.note{font-size:13.5px;color:var(--sub);margin-top:12px}
+.tag{display:inline-block;font-size:12.5px;padding:2px 9px;border-radius:999px;background:var(--muted);color:var(--sub);margin-right:4px}
+ul.points{list-style:none;display:grid;gap:7px}
+ul.points li{padding-left:18px;position:relative;color:var(--ink-2)}
+ul.points li::before{content:"";position:absolute;left:3px;top:.68em;width:6px;height:6px;border-radius:50%;background:#9aa6b2}
+ul.points li.strong{color:var(--ink)}
+ul.points li.strong::before{background:var(--ink)}
+.cols{columns:2 230px;column-gap:24px}
+.cols li{break-inside:avoid;margin-bottom:6px}
+.stat{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,140px),1fr));gap:10px}
+.stat div{background:var(--muted);border-radius:12px;padding:11px 13px}
+.stat span{display:block;font-size:12.5px;color:var(--sub)}
+.stat b{font-weight:400;font-size:21px;font-variant-numeric:tabular-nums}
+.stat b.k{color:var(--accent)}
+.rows{display:grid;gap:8px}
+.row{display:grid;grid-template-columns:minmax(110px,200px) 1fr;gap:12px;padding:11px 13px;border-radius:12px;background:var(--muted)}
+.row b{font-weight:400;color:var(--ink)}
+.row span{color:var(--ink-2)}
+@media (max-width:560px){.row{grid-template-columns:1fr;gap:2px}}
+.callout{display:flex;gap:12px;align-items:flex-start;padding:14px 16px;border-radius:12px;border:1px solid var(--accent-line);background:var(--accent-weak);color:var(--ink-2);font-size:14.5px}
+.callout .ic{color:var(--accent);margin-top:2px}
+.caution{display:flex;gap:12px;align-items:flex-start;border-left:3px solid var(--ink);background:var(--surface);border-radius:0 var(--r) var(--r) 0;padding:16px 18px;box-shadow:var(--shadow);border-top:1px solid var(--line);border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+.caution h3{font-size:18px;margin-bottom:4px}
+.caution p{color:var(--ink-2)}
+.caution .ic{margin-top:3px}
+
+/* cover */
+.cover{min-height:calc(100% - 10px);display:flex;flex-direction:column;justify-content:center}
+.cover h2{font-size:clamp(34px,6vw,70px);line-height:1.1;margin:6px 0 14px}
+.cover .meta{color:var(--sub);font-size:clamp(15px,1.5vw,18px);margin-bottom:28px}
+.agenda .card{display:flex;gap:14px;align-items:flex-start}
+.agenda .bx{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;background:var(--muted);color:var(--ink-2);flex:0 0 42px}
+.agenda h3{font-size:19px;margin-bottom:2px}
+.agenda p{color:var(--sub);font-size:14.5px}
+
+/* tabs */
+.tabs{display:flex;gap:4px;flex-wrap:wrap;padding:4px;background:var(--muted);border-radius:14px;margin-bottom:14px;width:max-content;max-width:100%}
+.tab{display:inline-flex;align-items:center;gap:7px;border:0;background:none;cursor:pointer;padding:8px 14px;border-radius:10px;color:var(--sub);font-size:14.5px}
+.tab .ic{--icon:17px;width:17px;height:17px;flex-basis:17px}
+.tab:hover{color:var(--ink)}
+.tab[aria-selected="true"]{background:var(--accent);color:var(--accent-ink);box-shadow:0 1px 3px rgba(28,39,51,.15)}
+.panel[hidden]{display:none}
+
+/* timeline lanes */
+.lane-h{display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap}
+.lane-h h3{font-size:19px}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,170px),1fr));gap:10px}
+.step{position:relative;padding:13px 14px;border-radius:12px;background:var(--muted)}
+.step .d{font-size:19px;font-variant-numeric:tabular-nums}
+.step .t{font-size:14.5px;color:var(--ink)}
+.step .n{font-size:12.5px;color:var(--sub)}
+.step.past{opacity:.45}
+.step.next{background:var(--surface);box-shadow:inset 0 0 0 2px var(--accent)}
+.step.next .d{color:var(--accent)}
+.dday{position:absolute;top:10px;right:10px;font-size:12px;padding:1px 8px;border-radius:999px;background:var(--accent);color:#fff}
+
+/* calendar */
+.cal-wrap{display:grid;gap:14px;grid-template-columns:1fr}
+@media (min-width:1180px){.cal-wrap{grid-template-columns:minmax(0,1.5fr) minmax(0,1fr)}}
+.cal-list{order:-1}
+@media (min-width:1180px){.cal-list{order:0}}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.cal .dow{font-size:12px;color:var(--sub);text-align:center;padding:2px 0}
+.cal .day{min-height:74px;border-radius:10px;background:var(--muted);padding:5px 6px;font-size:12px;display:flex;flex-direction:column;gap:3px;overflow:hidden}
+.cal .day.out{background:transparent}
+.cal .day .n{font-variant-numeric:tabular-nums;color:var(--sub)}
+.cal .day.today{background:var(--surface);box-shadow:inset 0 0 0 2px var(--accent)}
+.cal .day.today .n{color:var(--accent)}
+.cal .ev{font-size:11.5px;line-height:1.25;padding:2px 5px;border-radius:6px;background:var(--surface);color:var(--ink-2);border:1px solid var(--line);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cal .ev.k{background:var(--accent);border-color:var(--accent);color:#fff}
+.cal .day.past .ev{opacity:.5}
+@media (max-width:640px){.cal .day{min-height:46px;padding:4px}.cal .ev{font-size:0;height:6px;padding:0;border-radius:3px}.cal .ev.k{background:var(--accent)}}
+.uplist{display:grid;gap:8px}
+.up{display:grid;grid-template-columns:96px 1fr auto;gap:10px;align-items:center;padding:10px 12px;border-radius:12px;background:var(--muted)}
+.up .d{font-variant-numeric:tabular-nums;font-size:14px;color:var(--ink-2)}
+.up .t{font-size:14.5px}
+.up .g{font-size:12px;color:var(--sub)}
+.up .dd{font-size:12.5px;padding:2px 9px;border-radius:999px;background:var(--surface);border:1px solid var(--line);color:var(--sub);font-variant-numeric:tabular-nums}
+.up.k .dd{background:var(--accent);border-color:var(--accent);color:#fff}
+.up.past{opacity:.45}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12.5px;color:var(--sub);margin-top:10px}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+
+/* score */
+.score{display:grid;gap:10px}
+.score-row{display:grid;grid-template-columns:minmax(110px,170px) 1fr 52px;align-items:center;gap:12px}
+.score-row small{display:block;color:var(--sub);font-size:12.5px}
+.score-row b{font-weight:400;font-size:19px;text-align:right;font-variant-numeric:tabular-nums}
+.bar{height:12px;border-radius:999px;background:var(--muted-2);overflow:hidden}
+.bar i{display:block;height:100%;width:0;border-radius:999px;background:#8794a2;transition:width .8s cubic-bezier(.2,.8,.2,1)}
+.bar i.k{background:var(--accent)}
+
+/* NEIS */
+.flow{list-style:none;display:grid;gap:10px;counter-reset:f}
+.flow li{counter-increment:f;display:grid;grid-template-columns:36px 1fr auto;gap:12px;align-items:start;background:var(--muted);border-radius:12px;padding:12px 14px}
+.flow li::before{content:counter(f);width:32px;height:32px;border-radius:10px;display:grid;place-items:center;background:var(--surface);border:1px solid var(--line);font-variant-numeric:tabular-nums;color:var(--ink-2)}
+.flow b{font-weight:400;display:block;color:var(--ink)}
+.flow span{font-size:14px;color:var(--sub)}
+.flow code{font-family:inherit;font-size:13px;background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:0 5px;color:var(--ink-2)}
+.who{font-size:12px;padding:2px 9px;border-radius:999px;background:var(--surface);border:1px solid var(--line);color:var(--sub);white-space:nowrap}
+.who.k{border-color:var(--accent-line);color:var(--accent)}
+@media (max-width:560px){.flow li{grid-template-columns:32px 1fr}.flow .who{grid-column:2;justify-self:start}}
+
+/* status bars */
+.bars{display:grid;gap:16px}
+.bar-row .top2{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:6px}
+.bar-row h3{font-size:19px}
+.bar-row .top2 span{color:var(--sub);font-size:14px}
+.bar-row .top2 b{font-weight:400;font-size:19px;color:var(--accent);font-variant-numeric:tabular-nums}
+
+/* qa */
+.qa .card h3{font-size:17px;margin-bottom:6px;display:flex;gap:10px;align-items:flex-start}
+.qa .card h3 .ic{color:var(--sub);margin-top:2px}
+.qa .card p{color:var(--sub);font-size:14.5px}
+
+/* memo */
+.field{display:grid;gap:6px}
+.field label{font-size:14px;color:var(--ink-2)}
+textarea,input[type=text]{width:100%;border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:var(--surface);font-size:15px;resize:vertical}
+textarea:focus,input[type=text]:focus{outline:2px solid var(--accent);outline-offset:0;border-color:transparent}
+.memo-add{display:flex;gap:8px}
+.memo-add .btn{flex:0 0 auto;white-space:nowrap}
+.memo-list{list-style:none;display:grid;gap:8px;margin-top:12px}
+.memo-list li{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:start;background:var(--muted);border-radius:12px;padding:10px 12px}
+.memo-list li p{white-space:pre-wrap;color:var(--ink)}
+.memo-list li small{display:block;color:var(--sub);font-size:12px}
+.memo-list .ib{width:34px;height:34px;border-radius:10px}
+.empty{color:var(--sub);font-size:14px;padding:8px 2px}
+.actions{display:flex;gap:8px;flex-wrap:wrap}
+.saved{font-size:12.5px;color:var(--sub)}
+
+/* nav floating */
+.pager{position:absolute;right:clamp(12px,2.6vw,32px);bottom:18px;display:flex;gap:8px;z-index:5}
+.pager .ib{width:46px;height:46px;border-radius:14px;box-shadow:var(--shadow)}
+
+/* modal */
+.dim{position:fixed;inset:0;background:rgba(20,28,38,.48);display:none;align-items:center;justify-content:center;padding:18px;z-index:100}
+.dim.on{display:flex}
+.modal{width:min(560px,100%);max-height:calc(100% - 20px);overflow:auto;background:var(--surface);border-radius:18px;box-shadow:0 20px 60px rgba(20,28,38,.3);padding:22px}
+.modal-h{display:flex;align-items:flex-start;gap:12px;margin-bottom:10px}
+.modal-h .ic{color:var(--accent);margin-top:3px}
+.modal-h h3{font-size:20px;flex:1}
+.modal-b{color:var(--ink-2);font-size:15px}
+.modal-b p+p{margin-top:8px}
+.modal-f{display:flex;justify-content:flex-end;gap:8px;margin-top:18px;flex-wrap:wrap}
+.errs{list-style:none;display:grid;gap:6px;margin-top:10px}
+.errs li{font-size:13.5px;color:#7a2e20;background:#f8ecea;border-radius:8px;padding:7px 10px}
+.drop{display:grid;gap:10px;margin-top:6px}
+.drop input[type=file]{font-size:14px}
+
+.toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,20px);background:var(--ink);color:#fff;padding:10px 16px;border-radius:12px;font-size:14px;opacity:0;pointer-events:none;transition:.25s;z-index:120}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;color:var(--sub);background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:4px 10px;white-space:nowrap}
+.chip .ic{--icon:15px;width:15px;height:15px;flex-basis:15px}
+.chip.ok{color:var(--accent);border-color:var(--accent-line)}
+.chip.err{color:#7a2e20;border-color:#e3c3bd}
+@media (max-width:760px){.chip span{display:none}.chip{padding:6px}}
+span[data-k],.stat b span[data-k],.top2 b span[data-k]{display:inline;font-size:inherit;color:inherit;margin:0;padding:0}
+/* responsive */
+.scrim{display:none}
+@media (max-width:1099px){
+  .app{grid-template-columns:1fr}
+  aside.side{position:fixed;left:0;top:0;bottom:0;width:min(86vw,var(--side));transform:translateX(-102%);transition:transform .3s ease;box-shadow:0 0 40px rgba(20,28,38,.2)}
+  aside.side.open{transform:none}
+  .scrim{display:block;position:fixed;inset:0;background:rgba(20,28,38,.4);opacity:0;pointer-events:none;transition:.3s;z-index:25}
+  .scrim.on{opacity:1;pointer-events:auto}
+  .menu-btn{display:inline-grid}
+}
+@media (max-width:640px){
+  .slide{padding-bottom:110px}
+  .lead{margin-bottom:16px}
+  .hide-sm{display:none}
+  .pager{left:50%;right:auto;transform:translateX(-50%)}
+  [data-tip]::after{display:none}
+}
+@media (min-width:1500px){.wrap{max-width:1280px}}
+@media (prefers-reduced-motion:reduce){.track,.bar i,aside.side{transition:none}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 10.5 12 4l9 6.5"/><path d="M5 9.5V20h14V9.5"/><path d="M10 20v-5h4v5"/></symbol>
+    <symbol id="i-map" viewBox="0 0 24 24"><path d="M9 4 3 6.5v13.5L9 17.5l6 2.5 6-2.5V4l-6 2.5z"/><path d="M9 4v13.5"/><path d="M15 6.5V20"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></symbol>
+    <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17"/><path d="M8 3v4"/><path d="M16 3v4"/></symbol>
+    <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20h16"/><path d="M7 16v-5"/><path d="M12 16V7"/><path d="M17 16v-8"/></symbol>
+    <symbol id="i-school" viewBox="0 0 24 24"><path d="M3 9 12 4.5 21 9l-9 4.5z"/><path d="M7 11v4.5c1.5 1.3 3.2 2 5 2s3.5-.7 5-2V11"/><path d="M21 9v5"/></symbol>
+    <symbol id="i-monitor" viewBox="0 0 24 24"><rect x="3" y="4.5" width="18" height="12" rx="2"/><path d="M8.5 20h7"/><path d="M12 16.5V20"/></symbol>
+    <symbol id="i-chat" viewBox="0 0 24 24"><path d="M5 5h14a1.5 1.5 0 0 1 1.5 1.5v9A1.5 1.5 0 0 1 19 17H10l-4.5 3.5V17H5a1.5 1.5 0 0 1-1.5-1.5v-9A1.5 1.5 0 0 1 5 5z"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8.5" r="3.2"/><path d="M3.5 19c.6-3 2.8-4.8 5.5-4.8s4.9 1.8 5.5 4.8"/><path d="M15.5 5.6a3.2 3.2 0 0 1 0 5.8"/><path d="M17 14.6c1.9.5 3.1 2 3.5 4.4"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3.5 5 6v5.5c0 4.2 2.9 7.4 7 9 4.1-1.6 7-4.8 7-9V6z"/><path d="m9 12 2 2 4-4"/></symbol>
+    <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 4 2.8 19.5h18.4z"/><path d="M12 10v4"/><path d="M12 17h.01"/></symbol>
+    <symbol id="i-flag" viewBox="0 0 24 24"><path d="M5 21V4"/><path d="M5 4h11l-2 4 2 4H5"/></symbol>
+    <symbol id="i-list" viewBox="0 0 24 24"><path d="M9 6h11"/><path d="M9 12h11"/><path d="M9 18h11"/><path d="M4.5 6h.01"/><path d="M4.5 12h.01"/><path d="M4.5 18h.01"/></symbol>
+    <symbol id="i-note" viewBox="0 0 24 24"><path d="M6 3.5h9l4 4V20a.5.5 0 0 1-.5.5h-12A.5.5 0 0 1 6 20z" transform="translate(-.5 0)"/><path d="M14.5 3.5v4h4"/><path d="M8.5 12h7"/><path d="M8.5 15.5h7"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16"/><path d="M4 12h16"/><path d="M4 17h16"/></symbol>
+    <symbol id="i-left" viewBox="0 0 24 24"><path d="m14.5 6-6 6 6 6"/></symbol>
+    <symbol id="i-right" viewBox="0 0 24 24"><path d="m9.5 6 6 6-6 6"/></symbol>
+    <symbol id="i-down" viewBox="0 0 24 24"><path d="M12 4v11"/><path d="m7.5 10.5 4.5 4.5 4.5-4.5"/><path d="M5 19.5h14"/></symbol>
+    <symbol id="i-up" viewBox="0 0 24 24"><path d="M12 15V4"/><path d="M7.5 8.5 12 4l4.5 4.5"/><path d="M5 19.5h14"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8.5" y="8.5" width="11" height="11" rx="2"/><path d="M15.5 8.5V6a1.5 1.5 0 0 0-1.5-1.5H6A1.5 1.5 0 0 0 4.5 6v8A1.5 1.5 0 0 0 6 15.5h2.5"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="m6 6 12 12"/><path d="M18 6 6 18"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4.5 7h15"/><path d="M9.5 7V4.5h5V7"/><path d="M6.5 7l1 13h9l1-13"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14"/><path d="M5 12h14"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 11v5"/><path d="M12 8h.01"/></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 16.5V11a6 6 0 0 1 12 0v5.5l1.5 2h-15z"/><path d="M10 20.5a2 2 0 0 0 4 0"/></symbol>
+    <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M19.5 12a7.5 7.5 0 1 1-2.2-5.3"/><path d="M19.5 4.5v4h-4"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
+    <symbol id="i-file" viewBox="0 0 24 24"><path d="M6 3.5h8l4 4V20.5H6z"/><path d="M14 3.5v4h4"/></symbol>
+  </defs>
+</svg>
+
+<div class="bg" aria-hidden="true">
+  <svg class="art" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice">
+    <circle cx="160" cy="80" r="260" fill="#9fb8d4"/>
+    <circle cx="1080" cy="140" r="220" fill="#a9c6c4"/>
+    <circle cx="980" cy="760" r="280" fill="#b9c4d2"/>
+    <circle cx="300" cy="760" r="200" fill="#c9d5e2"/>
+  </svg>
+  <svg class="grid" width="100%" height="100%"><defs><pattern id="pg" width="32" height="32" patternUnits="userSpaceOnUse"><path d="M32 0H0V32" fill="none" stroke="#7b8794" stroke-width=".6"/></pattern></defs><rect width="100%" height="100%" fill="url(#pg)"/></svg>
+</div>
+
+<div class="app">
+  <aside class="side" id="side" aria-label="메뉴">
+    <div class="side-head"><small>고흥 관내 중3 담임 협의회</small><b>2027학년도<br>관내 고입 진학지도</b></div>
+    <nav class="menu" id="menu"></nav>
+    <div class="side-foot">
+      <button class="btn sm" id="sideExport" type="button"><svg class="ic"><use href="#i-down"/></svg>내보내기</button>
+      <button class="btn sm" id="sideImport" type="button"><svg class="ic"><use href="#i-up"/></svg>불러오기</button>
+    </div>
+  </aside>
+  <div class="scrim" id="scrim"></div>
+
+  <div class="main">
+    <div class="top">
+      <button class="ib menu-btn" id="menuBtn" type="button" aria-label="메뉴 열기" data-tip="메뉴 열기" aria-controls="side" aria-expanded="false"><svg class="ic"><use href="#i-menu"/></svg></button>
+      <h1 id="curTitle">시작</h1>
+      <span class="chip" id="chipSheet" data-tip="시트 집계 상태"><svg class="ic"><use href="#i-chart"/></svg><span>시트 미연결</span></span>
+      <span class="chip" id="chipDb" data-tip="메모 저장 위치"><svg class="ic"><use href="#i-note"/></svg><span>이 브라우저</span></span>
+      <button class="ib" id="btnRefresh" type="button" aria-label="시트 다시 불러오기" data-tip="시트 다시 불러오기"><svg class="ic"><use href="#i-refresh"/></svg></button>
+      <span class="count" id="count"></span>
+    </div>
+    <div class="progress"><i id="prog"></i></div>
+    <div class="notice-bar" id="noticeBar" role="status"><svg class="ic"><use href="#i-bell"/></svg><span id="noticeText"></span></div>
+
+    <main class="stage">
+      <div class="track" id="track">
+
+<!-- 1 시작 -->
+<section class="slide" id="s-start" data-title="시작" data-group="기본 안내" data-icon="home">
+  <div class="wrap cover">
+    <span class="kicker">고흥 관내 중학교 3학년 담임 협의회</span>
+    <h2>2027학년도<br><span class="key">관내 고입 진학지도</span></h2>
+    <p class="meta">고흥고 · 녹동고 · 고흥산업과학고 · 고흥도화고 요강과 전남 고입 기본계획 기준</p>
+    <div class="grid g3 agenda">
+      <div class="card"><div class="bx"><svg class="ic"><use href="#i-map"/></svg></div><div><h3>기본 안내</h3><p>전기·후기 구조, 일정, 내신 산출</p></div></div>
+      <div class="card"><div class="bx"><svg class="ic"><use href="#i-school"/></svg></div><div><h3>관내 고교와 담임 업무</h3><p>요강, NEIS 처리, 상담과 서류</p></div></div>
+      <div class="card"><div class="bx"><svg class="ic"><use href="#i-users"/></svg></div><div><h3>함께 협의</h3><p>희망자 현황, 지도 기준, 메모</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 2 고입 한눈에 -->
+<section class="slide" id="s-overview" data-title="고입 한눈에" data-group="기본 안내" data-icon="map">
+  <div class="wrap">
+    <span class="kicker">고입 기본 구조</span>
+    <h2>전기와 후기, 두 번에 나눠 뽑아요</h2>
+    <p class="lead">관내 4개 고교 중 특성화고 두 곳이 먼저(전기), 일반고 두 곳이 나중(후기)에 선발해요.</p>
+    <div class="grid g2">
+      <div class="card">
+        <div class="label"><svg class="ic"><use href="#i-flag"/></svg>전기 · 특성화고</div>
+        <p style="margin-bottom:10px"><span class="tag">고흥산업과학고</span><span class="tag">고흥도화고</span></p>
+        <ul class="points"><li>원서 11월 하순, 발표 12월 초</li><li>학과를 정해서 지원해요.</li><li>전기 학교는 한 곳만 지원할 수 있어요.</li><li class="strong">합격하면 후기 학교에 지원할 수 없어요.</li></ul>
+      </div>
+      <div class="card">
+        <div class="label"><svg class="ic"><use href="#i-school"/></svg>후기 · 일반고</div>
+        <p style="margin-bottom:10px"><span class="tag">고흥고</span><span class="tag">녹동고</span></p>
+        <ul class="points"><li>원서 12월 중순, 발표 12월 말</li><li>내신 석차백분율 순으로 선발해요.</li><li>전기 학교에 불합격한 학생도 지원할 수 있어요.</li><li>전형 자료를 기숙사 입사와 장학생 선발에도 써요.</li></ul>
+      </div>
+    </div>
+    <div class="grid g3 mt">
+      <div class="card"><div class="label">2027 고흥 중3</div><div class="big">295<small>명</small></div><p class="note">2026. 4. 1. 기준, 작년보다 26명 줄었어요.</p></div>
+      <div class="card"><div class="label">관내 고교 모집정원</div><div class="big">290<small>명</small></div><p class="note">4개교 15학급. 중3 학생 수와 거의 같아요.</p></div>
+      <div class="card"><div class="label">작년 관내 진학률</div><div class="big">80.4<small>%</small></div><p class="note">졸업생 316명 중 254명이 관내로, 62명이 다른 시군·시도로 갔어요.</p></div>
+    </div>
+    <p class="note hide-sm">출처: 2027학년도 전남광주통합특별시(종전 전라남도) 고입전형 설명 자료</p>
+  </div>
+</section>
+
+<!-- 3 일정 -->
+<section class="slide" id="s-schedule" data-title="일정" data-group="기본 안내" data-icon="clock">
+  <div class="wrap">
+    <span class="kicker">고입 일정</span>
+    <h2>전기와 후기, 날짜가 달라요</h2>
+    <p class="lead">원서는 모두 출신 중학교에서 NEIS 입(진)학 시스템으로 제출해요.</p>
+    <div class="card">
+      <div class="lane-h"><span class="tag">전기</span><h3>고흥산업과학고 · 고흥도화고</h3></div>
+      <div class="steps" data-lane>
+        <div class="step" data-date="2026-11-20"><div class="d">11.20.(금)</div><div class="t">성적 기준일</div><div class="n">3-2 중간고사까지</div></div>
+        <div class="step" data-date="2026-11-23" data-end="2026-11-26"><div class="d">11.23.~26.</div><div class="t">원서 접수</div><div class="n">26일(목) 17:00 마감</div></div>
+        <div class="step" data-date="2026-11-30"><div class="d">11.30.(월)</div><div class="t">전형일</div><div class="n">두 학교 모두</div></div>
+        <div class="step" data-date="2026-12-04"><div class="d">12.4.(금)</div><div class="t">합격자 발표</div><div class="n">도화고 동의서 12.11.까지</div></div>
+      </div>
+    </div>
+    <div class="card mt">
+      <div class="lane-h"><span class="tag">후기</span><h3>고흥고 · 녹동고</h3></div>
+      <div class="steps" data-lane>
+        <div class="step" data-date="2026-12-11"><div class="d">12.11.(금)</div><div class="t">성적 기준일</div><div class="n">3-2 기말고사까지</div></div>
+        <div class="step" data-date="2026-12-14" data-end="2026-12-17"><div class="d">12.14.~17.</div><div class="t">원서 접수</div><div class="n">17일(목) 17:00 마감</div></div>
+        <div class="step" data-date="2026-12-30"><div class="d">12.30.(수)</div><div class="t">합격자 발표</div><div class="n">각 학교 홈페이지</div></div>
+      </div>
+    </div>
+    <div class="grid g3 mt">
+      <div class="card"><div class="label">12.7.~12.10.</div><p class="note" style="margin:0">전남외고·광양제철고 원서 (관외 후기 지원자)</p></div>
+      <div class="card"><div class="label">1.4.(월)~</div><p class="note" style="margin:0">미달 학교 추가모집 원서 접수</p></div>
+      <div class="card"><div class="label">1.18.~1.20.</div><p class="note" style="margin:0">합격자 등록 (네 학교 공통)</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 4 캘린더 -->
+<section class="slide" id="s-calendar" data-title="남은 일정 캘린더" data-group="기본 안내" data-icon="cal">
+  <div class="wrap">
+    <span class="kicker">오늘부터 등록까지</span>
+    <h2>남은 일정 캘린더</h2>
+    <p class="lead">지난 일정은 흐리게, 오늘은 테두리로 표시돼요. 원서 접수와 등록처럼 놓치면 안 되는 일정만 강조색으로 표시했어요.</p>
+    <div class="cal-wrap">
+      <div class="card">
+        <div class="tabs" role="tablist" aria-label="월 선택" id="calTabs"></div>
+        <div class="cal" id="calGrid"></div>
+        <div class="legend"><span><i style="background:var(--accent)"></i>원서 접수·등록</span><span><i style="background:var(--surface);border:1px solid var(--line)"></i>그 밖의 일정</span></div>
+      </div>
+      <div class="card cal-list">
+        <div class="label"><svg class="ic"><use href="#i-list"/></svg>다가오는 일정</div>
+        <div class="uplist" id="upList"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5 내신 -->
+<section class="slide" id="s-score" data-title="내신 이해" data-group="기본 안내" data-icon="chart">
+  <div class="wrap">
+    <span class="kicker">중학교 내신 성적</span>
+    <h2>300점 만점, 석차백분율로 줄 세워요</h2>
+    <p class="lead">교과뿐 아니라 출석, 창의적 체험활동, 행동특성까지 들어가요. 중학교 전 학년 기록을 반영해요.</p>
+    <div class="tabs" role="tablist" aria-label="내신 항목">
+      <button class="tab" role="tab" data-t="sc-all"><svg class="ic"><use href="#i-chart"/></svg>배점</button>
+      <button class="tab" role="tab" data-t="sc-att"><svg class="ic"><use href="#i-clock"/></svg>출석</button>
+      <button class="tab" role="tab" data-t="sc-plus"><svg class="ic"><use href="#i-plus"/></svg>창체·행동특성 가감점</button>
+      <button class="tab" role="tab" data-t="sc-diff"><svg class="ic"><use href="#i-info"/></svg>학교별 차이</button>
+    </div>
+    <div class="card">
+      <div class="panel" id="sc-all">
+        <div class="score" id="score">
+          <div class="score-row" data-v="210"><div>교과<small>기본 84 + 실질 126</small></div><div class="bar"><i class="k"></i></div><b>210</b></div>
+          <div class="score-row" data-v="36"><div>출석<small>기본 20</small></div><div class="bar"><i></i></div><b>36</b></div>
+          <div class="score-row" data-v="36"><div>창의적 체험활동<small>학년당 12</small></div><div class="bar"><i></i></div><b>36</b></div>
+          <div class="score-row" data-v="18"><div>행동특성<small>학년당 6</small></div><div class="bar"><i></i></div><b>18</b></div>
+        </div>
+        <p class="note">3학년 재적생이 7명 미만인 학교는 석차백분율을 낼 때 인원을 7명으로 적용해요. 전남은 봉사활동 점수를 따로 내지 않아요.</p>
+      </div>
+      <div class="panel" id="sc-att">
+        <ul class="points">
+          <li>미인정 결석 0일이면 36점, 결석 2일마다 1점씩 내려가요. 31일 이상이면 20점이에요.</li>
+          <li class="strong">미인정 지각·조퇴·결과는 합쳐서 3회가 결석 1일이에요.</li>
+          <li>질병이나 기타 사유로 인한 결석·지각·조퇴는 계산에 넣지 않아요.</li>
+        </ul>
+      </div>
+      <div class="panel" id="sc-plus">
+        <div class="grid g2">
+          <div><div class="label">창의적 체험활동</div><ul class="points"><li>학년당 기본 11점, ±1점 범위에서 가감</li><li>가산 예: 정·부반장, 학생회 간부, 교내상, 활동 우수자</li><li>감점 예: 활동에 소극적이거나 미인정 이탈</li></ul></div>
+          <div><div class="label">행동특성</div><ul class="points"><li>학년당 기본 5점, ±1점 범위에서 가감</li><li>가산 예: 효행상, 선행상, 봉사상</li><li>감점 예: 선도규정에 따른 징계</li></ul></div>
+        </div>
+        <div class="callout mt"><svg class="ic"><use href="#i-info"/></svg><span>가감점 대상은 학업성적관리위원회에서 심의해요. 전기 성적 기준일(11.20.) 전에 대상자를 정리해 두세요.</span></div>
+      </div>
+      <div class="panel" id="sc-diff">
+        <div class="rows">
+          <div class="row"><b>성적 기준일</b><span>전기 11.20.(3-2 중간까지) / 후기 12.11.(3-2 기말까지)</span></div>
+          <div class="row"><b>동점자 처리</b><span>고흥고·녹동고·도화고는 교과가 먼저, 산과고는 출석이 1순위예요.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6 관내 고교 -->
+<section class="slide" id="s-schools" data-title="관내 고교" data-group="관내 고교와 담임 업무" data-icon="school">
+  <div class="wrap">
+    <span class="kicker">관내 고등학교 모집 요강</span>
+    <h2>네 학교, 한눈에</h2>
+    <p class="lead">정원 내 인원 기준이에요. 국가유공자 자녀, 고입특례, 특수교육대상자는 정원 외로 따로 뽑아요.</p>
+    <div class="tabs" role="tablist" aria-label="학교 선택">
+      <button class="tab" role="tab" data-t="sch-gh">고흥고</button>
+      <button class="tab" role="tab" data-t="sch-nd">녹동고</button>
+      <button class="tab" role="tab" data-t="sch-sg">고흥산업과학고</button>
+      <button class="tab" role="tab" data-t="sch-dh">고흥도화고</button>
+    </div>
+    <div class="card">
+      <div class="panel" id="sch-gh">
+        <div class="grid g2">
+          <div><p><span class="tag">일반고</span><span class="tag">후기</span><span class="tag">6학급</span></p><h3 style="font-size:26px;margin:6px 0 10px">고흥고등학교</h3><div class="big">120<small>명</small></div></div>
+          <div class="stat"><div><span>일반전형</span><b class="k">113</b></div><div><span>사회통합</span><b>6</b></div><div><span>체육특기자(역도)</span><b>1</b></div></div>
+        </div>
+        <ul class="points mt"><li>내신 석차백분율 순으로 선발해요.</li><li>사회통합·체육특기자 전형이 미달되면 일반전형으로 채워요.</li><li>정원 외: 국가유공자 자녀 3명, 고입특례 3명 이내. 전형료 면제</li></ul>
+      </div>
+      <div class="panel" id="sch-nd">
+        <div class="grid g2">
+          <div><p><span class="tag">일반고</span><span class="tag">후기</span><span class="tag">4학급</span></p><h3 style="font-size:26px;margin:6px 0 10px">녹동고등학교</h3><div class="big">80<small>명</small></div></div>
+          <div class="stat"><div><span>일반전형</span><b class="k">76</b></div><div><span>사회통합</span><b>4</b></div></div>
+        </div>
+        <ul class="points mt"><li>내신 석차백분율 순으로 선발해요.</li><li>특수교육대상자는 교육감이 정원 외로 배치하고, 배치 결과에 따라 원서를 내요.</li><li>정원 외: 국가유공자 자녀 2명, 고입특례 2명 이내</li></ul>
+      </div>
+      <div class="panel" id="sch-sg">
+        <div class="grid g2">
+          <div><p><span class="tag">특성화고</span><span class="tag">전기</span><span class="tag">4학과</span></p><h3 style="font-size:26px;margin:6px 0 10px">고흥산업과학고등학교</h3><div class="big">72<small>명</small></div></div>
+          <div class="stat"><div><span>식품가공과</span><b>18</b></div><div><span>스마트팜관리과</span><b>18</b></div><div><span>e-비즈니스과</span><b>18</b></div><div><span>드론산업과</span><b>18</b></div></div>
+        </div>
+        <ul class="points mt"><li>학과마다 일반 15, 소질적성 1, 가업승계 1, 사회통합 1명이에요.</li><li>학과를 1~3지망까지 써요. 1지망에서 먼저 뽑고 빈자리는 2·3지망 순으로 채워요.</li><li class="strong">드론산업과는 한 학과만 지원하고, 2·3지망으로 채우지 않아요.</li><li>취업희망자 특별전형은 학교장 추천서, 자기소개서, 취업희망 동의서가 필요해요. 가업승계는 사업자등록증 사본과 가족관계증명서도 내요.</li></ul>
+      </div>
+      <div class="panel" id="sch-dh">
+        <div class="grid g2">
+          <div><p><span class="tag">특성화고</span><span class="tag">전기</span><span class="tag">공업계열</span></p><h3 style="font-size:26px;margin:6px 0 10px">고흥도화고등학교</h3><div class="big">18<small>명</small></div></div>
+          <div class="stat"><div><span>전기전자과 일반</span><b class="k">17</b></div><div><span>사회통합</span><b>1</b></div></div>
+        </div>
+        <ul class="points mt"><li>출신 중학교장 추천으로 지원하는 추천입학제가 원칙이에요.</li><li>중학교 전 학년의 교과와 비교과 성적을 모두 반영해요.</li><li>합격 후 12.4.~12.11. 합격자 동의서를 내야 해요.</li></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 7 NEIS -->
+<section class="slide" id="s-neis" data-title="NEIS 한눈에" data-group="관내 고교와 담임 업무" data-icon="monitor">
+  <div class="wrap">
+    <span class="kicker">NEIS 기반 고입 시스템 · 중학교</span>
+    <h2>NEIS 업무 처리 한눈에</h2>
+    <p class="lead">메뉴는 <b style="font-weight:400;color:var(--ink)">전남_고입</b> 아래에 있어요. 내신 산출이 끝나야 원서를 쓸 수 있고, 전남[고입] 전용 화면에서 일반 나이스 메뉴를 쓰면 오류가 날 수 있어요.</p>
+    <div class="tabs" role="tablist" aria-label="NEIS 단계">
+      <button class="tab" role="tab" data-t="ne-pre"><svg class="ic"><use href="#i-check"/></svg>선행작업</button>
+      <button class="tab" role="tab" data-t="ne-score"><svg class="ic"><use href="#i-chart"/></svg>내신관리</button>
+      <button class="tab" role="tab" data-t="ne-app"><svg class="ic"><use href="#i-file"/></svg>원서관리</button>
+    </div>
+    <div class="card">
+      <div class="panel" id="ne-pre">
+        <ol class="flow">
+          <li><div><b>전·편입학생 학적 처리</b><span><code>학적 &gt; 전편입/재취학/복학생관리</code></span></div><span class="who">학적 담당</span></li>
+          <li><div><b>출결 마감</b><span>내신 산출 기준으로 모든 반 출결을 마감해요.</span></div><span class="who k">담임</span></li>
+          <li><div><b>누가주소 등록</b><span>주민등록등본의 도로명 주소로 정확히 입력해요. <code>기본신상관리 &gt; 누가주소등록</code></span></div><span class="who k">담임</span></li>
+          <li><div><b>학생부 자료 반영·검증 후 반마감</b><span>누락 자료 확인, 전편입생 출결 중복 줄 삭제. 이상 없으면 「반마감」</span></div><span class="who k">담임</span></li>
+          <li><div><b>전체마감 · 업무분장</b><span>생활기록부 담당자가 전체마감, 기관마스터가 고입 업무 권한을 부여해요.</span></div><span class="who">담당자</span></li>
+        </ol>
+      </div>
+      <div class="panel" id="ne-score">
+        <ol class="flow">
+          <li><div><b>대상자 생성</b><span><code>고입_내신관리[중] &gt; 대상자생성</code> 담임 정보도 여기서 등록해요.</span></div><span class="who">3학년 총괄</span></li>
+          <li><div><b>대상자 관리</b><span>내신 산출 제외자, 수정 대상 항목을 지정해요.</span></div><span class="who k">담임</span></li>
+          <li><div><b>항목별 점수 확인·수정</b><span>창체활동, 행동특성, 출석성적, 교과성적 탭을 하나씩 확인해요.</span></div><span class="who k">담임</span></li>
+          <li><div><b>내신 산출 · 석차백분율 산출</b><span>반별로는 처리할 수 없어요. 총괄 선생님이 한 번에 처리해요.</span></div><span class="who">3학년 총괄</span></li>
+          <li><div><b>기초자료 확인서 출력·확인</b><span>학생별로 출력해 오류가 없는지 확인받아요. 원서 전에 바로잡을 마지막 기회예요.</span></div><span class="who k">담임</span></li>
+          <li><div><b>반별 석차연명부 · 내신성적통지표</b><span>통지표는 내신 마감 후에 출력돼요.</span></div><span class="who k">담임</span></li>
+        </ol>
+      </div>
+      <div class="panel" id="ne-app">
+        <ol class="flow">
+          <li><div><b>원서 진행 관리</b><span>원서에 찍힐 담임 ID와 전화번호를 등록해요.</span></div><span class="who">3학년 총괄</span></li>
+          <li><div><b>원서 등록 · 기본정보</b><span><code>고입_원서관리[중] &gt; 원서등록[중]</code> 전형구분(전기/비평준)을 골라요.</span></div><span class="who k">담임</span></li>
+          <li><div><b>지원 고교 선택</b><span>지원 고교, <b style="display:inline;font-weight:400;color:var(--ink)">전형유형(일반·사회통합)</b>, 응시분류, 학과 지망 순서를 넣어요. 전형유형이 사정 단위라 꼭 확인해요.</span></div><span class="who k">담임</span></li>
+          <li><div><b>기타지원자 등록</b><span>관외·외고·자사고처럼 이 시스템으로 원서를 쓰지 않는 학생은 기타지원자로 등록해요. 미지원자가 남지 않게 통계를 확인해요.</span></div><span class="who k">담임</span></li>
+          <li><div><b>원서 조회·출력 · 제출</b><span>제출 후 수정이 필요하면 전송 취소 후 다시 처리해요.</span></div><span class="who k">담임</span></li>
+          <li><div><b>사정 결과 확인</b><span>공개 설정된 뒤에 결과가 보여요.</span></div><span class="who">담임 · 총괄</span></li>
+        </ol>
+      </div>
+    </div>
+    <p class="note hide-sm">출처: 2027학년도 고등학교 입(진)학 NEIS 기반 고입 시스템 매뉴얼(중학교)</p>
+  </div>
+</section>
+
+<!-- 8 상담 -->
+<section class="slide" id="s-counsel" data-title="상담 포인트" data-group="관내 고교와 담임 업무" data-icon="chat">
+  <div class="wrap">
+    <span class="kicker">학생·학부모 상담</span>
+    <h2>상담할 때 꼭 짚을 것</h2>
+    <p class="lead">진로 상담이 원서 단계에서 바뀌지 않도록 미리 확인해 두면 좋아요.</p>
+    <div class="grid g2">
+      <div class="card"><div class="label"><svg class="ic"><use href="#i-flag"/></svg>전기 학교를 고민하는 학생</div><ul class="points"><li class="strong">합격하면 일반고 지원 기회가 없어져요.</li><li>산과고는 1~3지망 순서가 결과를 바꿔요. 드론산업과는 단독 지원이에요.</li><li>도화고는 전기전자과 한 학과예요.</li></ul></div>
+      <div class="card"><div class="label"><svg class="ic"><use href="#i-school"/></svg>일반고를 희망하는 학생</div><ul class="points"><li>고흥고와 녹동고 중 한 곳만 써요.</li><li>성적 기준일이 12.11.이라 3-2 기말고사까지 반영돼요.</li></ul></div>
+      <div class="card"><div class="label"><svg class="ic"><use href="#i-map"/></svg>관외 고교를 희망하는 학생</div><ul class="points"><li>학교마다 일정과 서류가 달라요. 해당 학교 요강을 따로 확인해요.</li><li class="strong">이중 지원 금지는 관외 고교에도 똑같이 적용돼요.</li></ul></div>
+      <div class="card"><div class="label"><svg class="ic"><use href="#i-info"/></svg>아직 학교를 못 정한 학생</div><ul class="points"><li>전기 마감(11.26.)과 후기 마감(12.17.) 중 어느 쪽인지부터 정해요.</li><li>성적, 통학, 희망 진로를 함께 놓고 이야기해요.</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<!-- 9 사회통합 -->
+<section class="slide" id="s-social" data-title="사회통합 전형" data-group="관내 고교와 담임 업무" data-icon="users">
+  <div class="wrap">
+    <span class="kicker">사회통합 전형</span>
+    <h2>누가 쓸 수 있고, 무엇을 내나요</h2>
+    <p class="lead">정원 내로 뽑아요. 기회균등 대상자를 50% 이상 먼저 뽑고, 남으면 사회다양성 대상자로 채워요. 미달되면 일반전형으로 넘어가요.</p>
+    <div class="tabs" role="tablist" aria-label="사회통합 전형">
+      <button class="tab" role="tab" data-t="so-eq">기회균등</button>
+      <button class="tab" role="tab" data-t="so-dv">사회다양성</button>
+      <button class="tab" role="tab" data-t="so-inc">소득 기준</button>
+      <button class="tab" role="tab" data-t="so-doc">제출 서류</button>
+    </div>
+    <div class="card">
+      <div class="panel" id="so-eq">
+        <div class="grid g2">
+          <div><div class="label">법정 대상자</div><ul class="points"><li>기초생활수급자</li><li>차상위계층</li><li>국가보훈대상자</li></ul></div>
+          <div><div class="label">비법정 대상자</div><ul class="points"><li>차상위계층(비법정): 기준 중위소득 50% 이하</li><li>차차상위계층: 기준 중위소득 60% 이하</li><li>중학교장이 추천한 경제적으로 어려운 학생</li></ul></div>
+        </div>
+      </div>
+      <div class="panel" id="so-dv">
+        <div class="label">공통지정 권장 대상자</div>
+        <ul class="points cols" style="margin-bottom:16px"><li>한부모가정 자녀</li><li>다문화가정 자녀</li><li>북한이탈주민 또는 자녀</li><li>특수교육대상자</li><li>도서벽지·농어촌·읍면지역 학생</li><li>보호대상아동</li><li>소년·소녀 가장</li><li>조손가정 자녀</li><li>순직 공무원의 자녀</li><li>장애인 자녀(중증)</li></ul>
+        <div class="label">교육감 지정 대상자</div>
+        <ul class="points cols"><li>다자녀가정(3자녀 이상) 자녀</li><li>소규모학교(3학급 이하) 졸업(예정)자</li><li>직업군인 자녀(장기근속 10년 이상)</li><li>입양 자녀</li></ul>
+        <div class="callout mt"><svg class="ic"><use href="#i-info"/></svg><span>고흥 관내 중학교는 모두 읍·면 지역이에요. 읍·면 중학교에 2년 이상 다녔고 그동안 본인과 보호자가 모두 농어촌에 살았다면 '농어촌·읍면지역 학생'에 해당해요. 졸업(예정)자 100명 이상 학교는 제외되지만 관내에는 없어요. 어느 범주든 소득 기준을 함께 충족해야 해요.</span></div>
+      </div>
+      <div class="panel" id="so-inc">
+        <p style="margin-bottom:12px;color:var(--ink-2)">사회다양성 전형은 가족 소득 8분위(기준 중위소득 160%) 이하여야 해요. 가구원 수에 따른 건강보험료 납부확인서(최근 6개월)로 확인해요.</p>
+        <div class="rows">
+          <div class="row"><b>3인 가구</b><span>직장 309,777원 · 지역 264,935원 · 혼합 318,043원</span></div>
+          <div class="row"><b>4인 가구</b><span>직장 374,300원 · 지역 338,641원 · 혼합 390,974원</span></div>
+          <div class="row"><b>5인 가구</b><span>직장 457,613원 · 지역 435,046원 · 혼합 490,306원</span></div>
+          <div class="row"><b>6인 가구</b><span>직장 535,512원 · 지역 525,833원 · 혼합 584,741원</span></div>
+        </div>
+        <p class="note">월 본인부담금 기준, 노인장기요양보험료 제외(2026 소득판정기준표). 가구원은 주민등록상 함께 사는 부모와 2촌 이내 형제자매예요. 다른 가구원 수는 기본계획 표를 확인해 주세요.</p>
+      </div>
+      <div class="panel" id="so-doc">
+        <div class="rows">
+          <div class="row"><b>모든 지원자</b><span>부정입학 방지를 위한 학부모 확인서</span></div>
+          <div class="row"><b>기초생활수급자</b><span>수급자증명서</span></div>
+          <div class="row"><b>차상위계층</b><span>유형별 확인서(한부모가족증명서, 자활급여·본인부담경감 대상자 확인서 등)</span></div>
+          <div class="row"><b>국가보훈대상자</b><span>국가보훈대상자 확인원</span></div>
+          <div class="row"><b>비법정 차상위·차차상위</b><span>교육급여수급자 증명서 / 교육비지원 확인서</span></div>
+          <div class="row"><b>학교장 추천</b><span>경제적 어려움 증빙, 없으면 학교장추천위원회 의견서</span></div>
+          <div class="row"><b>사회다양성 공통</b><span>건강보험증 사본, 건강보험료 납부확인서(최근 6개월 평균)</span></div>
+        </div>
+        <p class="note">증빙서류는 제출일로부터 7일 이내 발급분만 인정돼요.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 10 정원 외 -->
+<section class="slide" id="s-extra" data-title="정원 외 전형" data-group="관내 고교와 담임 업무" data-icon="shield">
+  <div class="wrap">
+    <span class="kicker">정원 외 전형</span>
+    <h2>해당 학생이 있는지 미리 확인해요</h2>
+    <p class="lead">일반 정원과 따로 뽑아요. 지원 방법은 일반전형과 같고, 증빙서류만 더 내요.</p>
+    <div class="grid g3">
+      <div class="card"><div class="label">국가유공자 자녀</div><p style="color:var(--ink-2)">보훈청이 지정한 교육지원 대상자예요. 증명서를 출신 중학교장이 확인해서 고교에 내요.</p></div>
+      <div class="card"><div class="label">고입특례 대상자</div><p style="color:var(--ink-2)">해외 귀국 학생, 북한이탈주민 학생 등이에요. 출입국 사실증명서 같은 서류가 필요해요.</p></div>
+      <div class="card"><div class="label">특수교육대상자</div><p style="color:var(--ink-2)">특수교육 운영위원회 심사를 거쳐 교육감이 배치해요. 배치된 학교로 원서를 내요.</p></div>
+    </div>
+    <div class="card mt">
+      <div class="label">학교별 정원 외 인원</div>
+      <div class="stat"><div><span>고흥고</span><b>유공자 3 · 특례 3</b></div><div><span>녹동고</span><b>유공자 2 · 특례 2</b></div><div><span>산과고</span><b>유공자 2 · 특례 2</b></div><div><span>도화고</span><b>유공자 1 · 특례 1</b></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 11 실수 -->
+<section class="slide" id="s-mistakes" data-title="자주 하는 실수" data-group="관내 고교와 담임 업무" data-icon="alert">
+  <div class="wrap">
+    <span class="kicker">놓치기 쉬운 것</span>
+    <h2>이런 실수, 미리 막아요</h2>
+    <p class="lead">대부분 원서 접수 직전에 발견돼서 손쓰기 어려운 것들이에요.</p>
+    <div class="grid g3 qa">
+      <div class="card"><h3><svg class="ic"><use href="#i-alert"/></svg>증빙서류를 너무 일찍 뗐어요</h3><p>제출일로부터 7일 이내 발급분만 인정돼요.</p></div>
+      <div class="card"><h3><svg class="ic"><use href="#i-alert"/></svg>주소만 전남으로 옮겼어요</h3><p>졸업자·타 시도 출신은 원서 접수일에 보호자와 함께 주민등록이 되어 있고 실제로 살아야 해요.</p></div>
+      <div class="card"><h3><svg class="ic"><use href="#i-alert"/></svg>전기 합격 후 일반고도 쓰려고 해요</h3><p>전기 합격자는 후기에 지원할 수 없어요. 이중 지원이 확인되면 합격이 취소될 수 있어요.</p></div>
+      <div class="card"><h3><svg class="ic"><use href="#i-alert"/></svg>산과고 지망 칸을 다 채웠어요</h3><p>드론산업과는 한 학과만 지원해요.</p></div>
+      <div class="card"><h3><svg class="ic"><use href="#i-alert"/></svg>전형유형을 일반으로 뒀어요</h3><p>사회통합 지원자는 NEIS 원서의 전형유형을 사회통합으로 골라야 해요. 학부모 확인서도 꼭 내요.</p></div>
+      <div class="card"><h3><svg class="ic"><use href="#i-alert"/></svg>기초자료 확인을 건너뛰었어요</h3><p>출결·창체 오류는 원서 전에만 바로잡을 수 있어요. 확인서로 학생 확인을 받아요.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 12 유의사항 -->
+<section class="slide" id="s-notes" data-title="유의사항" data-group="관내 고교와 담임 업무" data-icon="flag">
+  <div class="wrap">
+    <span class="kicker">유의사항</span>
+    <h2>놓치면 되돌릴 수 없는 것</h2>
+    <p class="lead">네 학교 요강과 기본계획에 공통으로 들어 있는 내용이에요.</p>
+    <div class="grid g2">
+      <div class="caution"><svg class="ic"><use href="#i-alert"/></svg><div><h3>전기 학교는 한 곳만</h3><p>접수 시기나 합격 여부와 관계없이 전기 학교는 하나만 지원할 수 있어요.</p></div></div>
+      <div class="caution"><svg class="ic"><use href="#i-alert"/></svg><div><h3>전기 합격 → 후기 지원 불가</h3><p>산과고나 도화고에 합격하면 고흥고·녹동고에 지원할 수 없어요.</p></div></div>
+      <div class="caution"><svg class="ic"><use href="#i-alert"/></svg><div><h3>이중 지원 금지</h3><p>출신 중학교장 책임이에요. 관외 고교에도 적용되고, 확인되면 합격이 취소될 수 있어요.</p></div></div>
+      <div class="caution"><svg class="ic"><use href="#i-info"/></svg><div><h3>불합격하면 추가모집</h3><p>전기 불합격은 바로 후기 지원, 전·후기 모두 합격한 적이 없으면 1.4.부터 미달 학교 추가모집에 지원할 수 있어요.</p></div></div>
+    </div>
+    <p class="note">일정과 서류는 교육청 지침에 따라 바뀔 수 있어요. 원서 접수 전에 각 학교 홈페이지 공지를 다시 확인해 주세요.</p>
+  </div>
+</section>
+
+<!-- 13 희망자 -->
+<section class="slide" id="s-status" data-title="희망자 현황" data-group="함께 협의" data-icon="chart">
+  <div class="wrap">
+    <span class="kicker">진학 희망 조사 · 시트 <span data-k="updated">11. 12.</span> 기준</span>
+    <h2>일반전형과 사회통합, 나눠서 봐요</h2>
+    <p class="lead">사회통합·체육특기자·특수교육 학생은 일반전형 숫자에서 뺐어요.</p>
+    <div class="tabs" role="tablist" aria-label="희망자 현황">
+      <button class="tab" role="tab" data-t="st-gen">일반전형</button>
+      <button class="tab" role="tab" data-t="st-soc">사회통합</button>
+      <button class="tab" role="tab" data-t="st-dist">석차 분포</button>
+      <button class="tab" role="tab" data-t="st-edu">교육청 조사</button>
+    </div>
+    <div class="card">
+      <div class="panel" id="st-gen">
+        <div class="bars" id="bars">
+          <div class="bar-row" data-vk="gh_gen" data-mk="gh_cap" data-v="105" data-m="113"><div class="top2"><h3>고흥고</h3><span><b><span data-k="gh_gen">105</span></b> / <span data-k="gh_cap">113</span>명 · 현재 커트라인 <span data-k="gh_cut">99.04</span>%</span></div><div class="bar"><i class="k"></i></div></div>
+          <div class="bar-row" data-vk="nd_gen" data-mk="nd_cap" data-v="55" data-m="76"><div class="top2"><h3>녹동고</h3><span><b><span data-k="nd_gen">55</span></b> / <span data-k="nd_cap">76</span>명 · 현재 커트라인 <span data-k="nd_cut">99.04</span>%</span></div><div class="bar"><i class="k"></i></div></div>
+          <div class="bar-row" data-vk="dh_gen" data-mk="dh_cap" data-v="15" data-m="17"><div class="top2"><h3>고흥도화고</h3><span><b><span data-k="dh_gen">15</span></b> / <span data-k="dh_cap">17</span>명 · 현재 커트라인 <span data-k="dh_cut">97.76</span>%</span></div><div class="bar"><i class="k"></i></div></div>
+          <div class="bar-row" data-vk="sg_gen" data-v="39" data-m="60"><div class="top2"><h3>고흥산업과학고</h3><span><b><span data-k="sg_gen">39</span></b> / 60명 · 1지망 기준</span></div><div class="bar"><i class="k"></i></div>
+            <div class="stat mt"><div><span>식품가공과</span><b><span data-k="sg_food">10</span> / 15</b></div><div><span>스마트팜관리과</span><b><span data-k="sg_farm">11</span> / 15</b></div><div><span>e-비즈니스과</span><b><span data-k="sg_ebiz">11</span> / 15</b></div><div><span>드론산업과</span><b><span data-k="sg_drone">7</span> / 15</b></div></div>
+          </div>
+        </div>
+        <p class="note">정원보다 희망자가 적으면 지금 커트라인은 희망자 중 가장 낮은 석차예요. 희망학교가 두 곳으로 입력된 학생을 빼면 고흥고 <span data-k="gh_cut2">87.5</span>%, 녹동고 <span data-k="nd_cut2">95.45</span>%예요.</p>
+      </div>
+      <div class="panel" id="st-soc">
+        <div class="stat"><div><span>고흥고</span><b class="k"><span data-k="gh_soc">4</span> / <span data-k="gh_soccap">6</span>명</b></div><div><span>녹동고</span><b><span data-k="nd_soc">0</span> / <span data-k="nd_soccap">4</span>명</b></div><div><span>고흥산업과학고</span><b><span data-k="sg_soc">0</span> / 4명</b></div><div><span>고흥도화고</span><b><span data-k="dh_soc">0</span> / <span data-k="dh_soccap">1</span>명</b></div></div>
+        <ul class="points mt"><li>관외 고교 사회통합 희망자는 <span data-k="out_soc">3</span>명이에요.</li><li class="strong">사회통합 대상 학생이 있으면 시트 참고사항 칸에 꼭 표시해 주세요.</li></ul>
+      </div>
+      <div class="panel" id="st-dist">
+        <div class="rows">
+          <div class="row"><b>상위 20% 이내</b><span>고흥고 <span data-k="dist_gh_1">27</span>명 · 녹동고 <span data-k="dist_nd_1">12</span>명</span></div>
+          <div class="row"><b>20~40%</b><span>고흥고 <span data-k="dist_gh_2">32</span>명 · 녹동고 <span data-k="dist_nd_2">13</span>명</span></div>
+          <div class="row"><b>40~60%</b><span>고흥고 <span data-k="dist_gh_3">26</span>명 · 녹동고 <span data-k="dist_nd_3">11</span>명</span></div>
+          <div class="row"><b>60~80%</b><span>고흥고 <span data-k="dist_gh_4">15</span>명 · 녹동고 <span data-k="dist_nd_4">10</span>명</span></div>
+          <div class="row"><b>80% 초과</b><span>고흥고 <span data-k="dist_gh_5">5</span>명 · 녹동고 <span data-k="dist_nd_5">9</span>명</span></div>
+        </div>
+      </div>
+      <div class="panel" id="st-edu">
+        <div class="stat"><div><span>고흥 관내 고교</span><b class="k">220명</b></div><div><span>통합특별시 내 다른 시군</span><b>65명</b></div><div><span>타 시·도</span><b>9명</b></div></div>
+        <p class="note">교육청 진학 희망 조사(11. 6. 기준, 294명). 관내 220명은 고흥고 106, 녹동고 56, 산과고 41, 도화고 17명이에요. 공유 시트 수합과는 학교별로 0~4명 차이가 나요.</p>
+      </div>
+    </div>
+    <div class="callout mt"><svg class="ic"><use href="#i-info"/></svg><span>희망학교가 두 곳 이상으로 입력된 행이 <span data-k="dup_rows">10</span>개 있어요. 해당 학생은 양쪽에 모두 세어져요. 관외 희망자는 <span data-k="out_total">72</span>명이에요.</span></div>
+  </div>
+</section>
+
+<!-- 14 협의 안건 -->
+<section class="slide" id="s-discuss" data-title="협의 안건" data-group="함께 협의" data-icon="users">
+  <div class="wrap">
+    <span class="kicker">함께 협의</span>
+    <h2>오늘 정할 것</h2>
+    <p class="lead">관내 중학교가 같은 기준으로 지도할 수 있도록 의견을 모아요. 결정한 내용은 '메모·공지'에 바로 적어 두세요.</p>
+    <div class="grid g3">
+      <div class="card"><div class="label"><svg class="ic"><use href="#i-school"/></svg>1. 고흥고 지도 기준</div><p style="color:var(--ink-2)">일반전형 희망자 <span class="key"><span data-k="gh_gen">105</span>명</span>, 정원 <span data-k="gh_cap">113</span>명. 관외·미정 학생이 고흥고로 오면 바뀌어요. 석차백분율 몇 %까지를 안정권으로 안내할지 정해요.</p></div>
+      <div class="card"><div class="label"><svg class="ic"><use href="#i-users"/></svg>2. 사회통합 대상자</div><p style="color:var(--ink-2)">정원은 고흥고 6, 녹동고 4, 산과고 학과별 1, 도화고 1명. 지금 고흥고 사회통합 희망자는 <span class="key"><span data-k="gh_soc">4</span>명</span>이에요. 대상자 확인 방법과 권장 기준을 정해요.</p></div>
+      <div class="card"><div class="label"><svg class="ic"><use href="#i-list"/></svg>3. 희망 조사 정리</div><p style="color:var(--ink-2)">두 곳으로 입력된 학생과 미정 학생의 확정 시점, 시트 수정 방법을 정해요.</p></div>
+    </div>
+    <div class="actions mt"><button class="btn primary" type="button" data-go="s-memo"><svg class="ic"><use href="#i-note"/></svg>결정 내용 적으러 가기</button></div>
+  </div>
+</section>
+
+<!-- 15 메모 -->
+<section class="slide" id="s-memo" data-title="메모 · 공지" data-group="함께 협의" data-icon="note">
+  <div class="wrap">
+    <span class="kicker">협의 기록</span>
+    <h2>메모와 공지</h2>
+    <p class="lead" id="memoLead">적은 내용은 자동 저장돼요. 파이어베이스가 연결되면 모든 선생님 화면에 실시간으로 함께 반영돼요. JSON 내보내기는 예비 백업이에요.</p>
+    <div class="grid g2">
+      <div class="card">
+        <div class="field"><label for="notice"><span style="display:inline-flex;align-items:center;gap:6px"><svg class="ic" style="--icon:17px;width:17px;height:17px"><use href="#i-bell"/></svg>공지사항 (모든 화면 위쪽에 표시)</span></label><textarea id="notice" rows="3" maxlength="2000" placeholder="예) 산과고 원서 마감 11.26.(목) 17:00"></textarea></div>
+        <div class="field mt"><label for="newMemo">메모 추가</label>
+          <div class="memo-add"><input type="text" id="newMemo" maxlength="1000" placeholder="협의 중 나온 내용을 적어요"><button class="btn primary" id="addMemo" type="button"><svg class="ic"><use href="#i-plus"/></svg>추가</button></div>
+        </div>
+        <ul class="memo-list" id="memoList"></ul>
+      </div>
+      <div class="card">
+        <div class="label">협의 결정</div>
+        <div class="field"><label for="d-cut">1. 고흥고 지도 기준</label><textarea id="d-cut" rows="2" maxlength="2000"></textarea></div>
+        <div class="field mt"><label for="d-social">2. 사회통합 대상자</label><textarea id="d-social" rows="2" maxlength="2000"></textarea></div>
+        <div class="field mt"><label for="d-survey">3. 희망 조사 정리</label><textarea id="d-survey" rows="2" maxlength="2000"></textarea></div>
+        <p class="saved mt" id="savedAt">아직 저장된 내용이 없어요.</p>
+      </div>
+    </div>
+    <div class="actions mt">
+      <button class="btn primary" id="btnExport" type="button"><svg class="ic"><use href="#i-down"/></svg>JSON 내보내기</button>
+      <button class="btn" id="btnImport" type="button"><svg class="ic"><use href="#i-up"/></svg>JSON 불러오기</button>
+      <button class="btn" id="btnClear" type="button"><svg class="ic"><use href="#i-trash"/></svg>모두 지우기</button>
+    </div>
+  </div>
+</section>
+
+      </div>
+      <div class="pager">
+        <button class="ib" id="prev" type="button" aria-label="이전 화면" data-tip="이전 화면 (←)" data-tip-pos="up"><svg class="ic"><use href="#i-left"/></svg></button>
+        <button class="ib" id="next" type="button" aria-label="다음 화면" data-tip="다음 화면 (→)" data-tip-pos="up"><svg class="ic"><use href="#i-right"/></svg></button>
+      </div>
+    </main>
+  </div>
+</div>
+
+<div class="dim" id="dim" aria-hidden="true">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="mTitle">
+    <div class="modal-h"><svg class="ic"><use id="mIcon" href="#i-info"/></svg><h3 id="mTitle"></h3><button class="ib" id="mClose" type="button" aria-label="닫기" data-tip="닫기 (Esc)" style="width:34px;height:34px;border-radius:10px"><svg class="ic"><use href="#i-x"/></svg></button></div>
+    <div class="modal-b" id="mBody"></div>
+    <div class="modal-f" id="mFoot"></div>
+  </div>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+/* ====== 연동 설정 (여기만 고치면 돼요) ====== */
+window.APP_CONFIG = {
+  // 같은 방 이름을 쓰는 화면끼리 메모가 공유돼요. 추측하기 어려운 이름을 권장해요.
+  room: 'goheung-2027-council',
+  // 구글 시트 '공개 집계' 탭을 [파일 > 공유 > 웹에 게시 > CSV]로 게시한 주소
+  sheetCsvUrl: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQFGmppXpR0bta62os-ZYjK5E7tro_IyZYogS9EziUgomb9DgC0sanJDZXBoFuNN8C6qAOda7sZYRjH/pub?gid=777001&single=true&output=csv',
+  sheetRefreshMinutes: 5,
+  // 파이어베이스 콘솔 > 프로젝트 설정 > 내 앱(웹)에서 복사한 firebaseConfig. 비워 두면 이 브라우저에만 저장돼요.
+  firebase: {
+    apiKey: "AIzaSyCQOwCL6NJuXAXp-7-MWsjE9xckWHX65I0",
+    authDomain: "goheung-17770.firebaseapp.com",
+    projectId: "goheung-17770",
+    storageBucket: "goheung-17770.firebasestorage.app",
+    messagingSenderId: "151586711008",
+    appId: "1:151586711008:web:c604dac315da9a3cb0f785"
+  }
+  /* 예시
+  firebase: {
+    apiKey: "AIza...",
+    authDomain: "프로젝트ID.firebaseapp.com",
+    projectId: "프로젝트ID",
+    appId: "1:1234:web:abcd"
+  }
+  */
+};
+</script>
+<script>
+(function(){
+  'use strict';
+  const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
+  const track=$('#track'), slides=$$('.slide',track), menu=$('#menu');
+  let cur=0;
+  const today=new Date(); today.setHours(0,0,0,0);
+  const esc=t=>String(t).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+  /* ---------- sidebar ---------- */
+  const groupIcons={'기본 안내':'map','관내 고교와 담임 업무':'school','함께 협의':'users'};
+  let lastGroup=null, grpEl=null;
+  slides.forEach((s,i)=>{
+    const g=s.dataset.group;
+    if(g!==lastGroup){grpEl=document.createElement('div');grpEl.className='grp';grpEl.innerHTML='<div class="grp-t"><svg class="ic"><use href="#i-'+groupIcons[g]+'"/></svg>'+esc(g)+'</div>';menu.appendChild(grpEl);lastGroup=g}
+    const b=document.createElement('button');b.type='button';b.className='mi';
+    b.innerHTML='<svg class="ic"><use href="#i-'+s.dataset.icon+'"/></svg><span>'+esc(s.dataset.title)+'</span>';
+    b.onclick=()=>{go(i);closeDrawer()};grpEl.appendChild(b);
+  });
+  const mis=$$('.mi',menu);
+  const side=$('#side'),scrim=$('#scrim'),menuBtn=$('#menuBtn');
+  function openDrawer(){side.classList.add('open');scrim.classList.add('on');menuBtn.setAttribute('aria-expanded','true');menuBtn.setAttribute('aria-label','메뉴 닫기');menuBtn.dataset.tip='메뉴 닫기';(mis[cur]||mis[0]).focus()}
+  function closeDrawer(){side.classList.remove('open');scrim.classList.remove('on');menuBtn.setAttribute('aria-expanded','false');menuBtn.setAttribute('aria-label','메뉴 열기');menuBtn.dataset.tip='메뉴 열기'}
+  menuBtn.onclick=()=>side.classList.contains('open')?closeDrawer():openDrawer();
+  scrim.onclick=closeDrawer;
+
+  /* ---------- carousel ---------- */
+  function go(i,fromHash){
+    cur=Math.max(0,Math.min(slides.length-1,i));
+    const stg=track.parentElement; stg.scrollLeft=0; stg.scrollTop=0;
+    track.style.transform='translateX('+(-100*cur)+'%)';
+    mis.forEach((m,k)=>{m.classList.toggle('on',k===cur);if(k===cur)m.setAttribute('aria-current','page');else m.removeAttribute('aria-current')});
+    $('#curTitle').textContent=slides[cur].dataset.title;
+    $('#count').textContent=(cur+1)+' / '+slides.length;
+    $('#prog').style.width=((cur+1)/slides.length*100)+'%';
+    $('#prev').disabled=cur===0; $('#next').disabled=cur===slides.length-1;
+    slides.forEach((s,k)=>{s.setAttribute('aria-hidden',k===cur?'false':'true');if('inert' in s)s.inert=k!==cur});
+    slides[cur].scrollTop=0;
+    const id=slides[cur].id;
+    if(id==='s-score')animate('#score .score-row',r=>r.dataset.v/210);
+    if(id==='s-status')animate('#bars .bar-row',r=>r.dataset.v/r.dataset.m);
+    if(!fromHash){try{history.replaceState(null,'','#'+id)}catch(e){}}
+  }
+  function animate(sel,ratio){$$(sel).forEach(r=>{const i=r.querySelector('.bar i');i.style.width='0';requestAnimationFrame(()=>requestAnimationFrame(()=>{i.style.width=Math.min(100,ratio(r)*100)+'%'}))})}
+  const stageEl=track.parentElement; stageEl.addEventListener('scroll',()=>{if(stageEl.scrollLeft||stageEl.scrollTop){stageEl.scrollLeft=0;stageEl.scrollTop=0}});
+  $('#prev').onclick=()=>go(cur-1); $('#next').onclick=()=>go(cur+1);
+  $$('[data-go]').forEach(b=>b.onclick=()=>go(slides.findIndex(s=>s.id===b.dataset.go)));
+  document.addEventListener('keydown',e=>{
+    if(dim.classList.contains('on'))return;
+    if(e.key==='Escape'&&side.classList.contains('open')){closeDrawer();menuBtn.focus();return}
+    const t=e.target.tagName; if(t==='INPUT'||t==='TEXTAREA'||e.target.getAttribute('role')==='tab')return;
+    if(e.key==='ArrowRight'||e.key==='PageDown')go(cur+1);
+    if(e.key==='ArrowLeft'||e.key==='PageUp')go(cur-1);
+  });
+  let sx=null,sy=null;
+  track.addEventListener('touchstart',e=>{sx=e.touches[0].clientX;sy=e.touches[0].clientY},{passive:true});
+  track.addEventListener('touchend',e=>{if(sx===null)return;const dx=e.changedTouches[0].clientX-sx,dy=e.changedTouches[0].clientY-sy;if(Math.abs(dx)>70&&Math.abs(dx)>Math.abs(dy)*1.4)go(cur+(dx<0?1:-1));sx=null});
+
+  /* ---------- tabs ---------- */
+  function setupTabs(list){
+    const tabs=$$('[role=tab]',list);
+    const sel=t=>{tabs.forEach(x=>{const on=x===t;x.setAttribute('aria-selected',on);x.tabIndex=on?0:-1;const p=document.getElementById(x.dataset.t);if(p)p.hidden=!on})};
+    tabs.forEach((t,i)=>{
+      const p=document.getElementById(t.dataset.t);
+      if(p){p.setAttribute('role','tabpanel');t.setAttribute('aria-controls',p.id)}
+      t.addEventListener('click',()=>sel(t));
+      t.addEventListener('keydown',e=>{
+        if(e.key==='ArrowRight'||e.key==='ArrowLeft'){e.preventDefault();const n=tabs[(i+(e.key==='ArrowRight'?1:-1)+tabs.length)%tabs.length];n.focus();sel(n)}
+      });
+    });
+    if(tabs.length&&tabs[0].dataset.t)sel(tabs[0]);
+  }
+  $$('.tabs').forEach(l=>{if(l.id!=='calTabs')setupTabs(l)});
+
+  /* ---------- lanes ---------- */
+  const D=s=>new Date(s+'T00:00:00');
+  $$('[data-lane]').forEach(l=>{let marked=false;$$('.step',l).forEach(s=>{const st=D(s.dataset.date),en=D(s.dataset.end||s.dataset.date);if(en<today){s.classList.add('past');return}if(!marked){marked=true;s.classList.add('next');const d=Math.round((st-today)/864e5);const b=document.createElement('span');b.className='dday';b.textContent=d>0?'D-'+d:(d===0?'오늘':'진행 중');s.appendChild(b)}})});
+
+  /* ---------- calendar ---------- */
+  const EV=[
+    {s:'2026-11-20',t:'전기 성적 기준일',g:'전기'},
+    {s:'2026-11-23',e:'2026-11-26',t:'전기 원서 접수',g:'전기',k:1},
+    {s:'2026-11-30',t:'전기 전형일',g:'전기'},
+    {s:'2026-12-04',t:'전기 합격자 발표',g:'전기'},
+    {s:'2026-12-04',e:'2026-12-11',t:'도화고 합격자 동의서',g:'전기'},
+    {s:'2026-12-07',e:'2026-12-10',t:'외고·자사고 원서',g:'관외'},
+    {s:'2026-12-11',t:'후기 성적 기준일',g:'후기'},
+    {s:'2026-12-14',e:'2026-12-17',t:'후기 원서 접수',g:'후기',k:1},
+    {s:'2026-12-30',t:'후기 합격자 발표',g:'후기'},
+    {s:'2027-01-04',e:'2027-01-06',t:'추가모집 원서(도화고 1.8.까지)',g:'공통'},
+    {s:'2027-01-07',t:'추가모집 발표(도화고 1.8.)',g:'공통'},
+    {s:'2027-01-18',e:'2027-01-20',t:'합격자 등록',g:'공통',k:1},
+    {s:'2027-02-01',e:'2027-02-11',t:'입학 전 전입자 원서',g:'공통'}
+  ].map(x=>({...x,sd:D(x.s),ed:D(x.e||x.s)}));
+  const months=[[2026,10],[2026,11],[2027,0],[2027,1]];
+  const calTabs=$('#calTabs'),grid=$('#calGrid');
+  const fmt=d=>(d.getMonth()+1)+'.'+d.getDate()+'.';
+  function drawMonth(y,m){
+    const first=new Date(y,m,1),start=new Date(first);start.setDate(1-first.getDay());
+    let h='';['일','월','화','수','목','금','토'].forEach(w=>h+='<div class="dow">'+w+'</div>');
+    for(let i=0;i<42;i++){
+      const d=new Date(start);d.setDate(start.getDate()+i);
+      if(i>=35&&d.getMonth()!==m)break;
+      const out=d.getMonth()!==m;
+      const evs=out?[]:EV.filter(x=>d>=x.sd&&d<=x.ed);
+      const cls=['day',out?'out':'',+d===+today?'today':'',d<today?'past':''].join(' ');
+      h+='<div class="'+cls+'"'+(evs.length?' title="'+esc(evs.map(x=>x.t).join(', '))+'"':'')+'>'+(out?'':'<span class="n">'+d.getDate()+'</span>'+evs.map(x=>'<span class="ev'+(x.k?' k':'')+'">'+esc(x.t)+'</span>').join(''))+'</div>';
+    }
+    grid.innerHTML=h;
+  }
+  let defIdx=months.findIndex(([y,m])=>today.getFullYear()===y&&today.getMonth()===m); if(defIdx<0)defIdx=0;
+  months.forEach(([y,m],i)=>{const b=document.createElement('button');b.className='tab';b.type='button';b.setAttribute('role','tab');b.textContent=(m+1)+'월';b.onclick=()=>pick(i);
+    b.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key==='ArrowLeft'){e.preventDefault();const n=(i+(e.key==='ArrowRight'?1:-1)+months.length)%months.length;calTabs.children[n].focus();pick(n)}});calTabs.appendChild(b)});
+  function pick(i){[...calTabs.children].forEach((b,k)=>{b.setAttribute('aria-selected',k===i);b.tabIndex=k===i?0:-1});drawMonth(...months[i])}
+  pick(defIdx);
+  $('#upList').innerHTML=EV.slice().sort((a,b)=>a.sd-b.sd).map(x=>{
+    const past=x.ed<today, d=Math.round((x.sd-today)/864e5);
+    const dd=past?'지남':(d>0?'D-'+d:'진행 중');
+    return '<div class="up'+(x.k?' k':'')+(past?' past':'')+'"><span class="d">'+fmt(x.sd)+(x.e?'~'+fmt(x.ed):'')+'</span><span><span class="t">'+esc(x.t)+'</span><br><span class="g">'+esc(x.g)+'</span></span><span class="dd">'+dd+'</span></div>';
+  }).join('');
+
+  /* ---------- modal ---------- */
+  const dim=$('#dim'),mTitle=$('#mTitle'),mBody=$('#mBody'),mFoot=$('#mFoot'),mIcon=$('#mIcon');
+  let lastFocus=null,onClose=null;
+  function modal({title,body,icon='info',primary,secondary='취소',onPrimary,onOpen,close}){
+    lastFocus=document.activeElement; onClose=close||null;
+    mTitle.textContent=title; mIcon.setAttribute('href','#i-'+icon);
+    mBody.innerHTML=''; if(typeof body==='string')mBody.innerHTML=body; else mBody.appendChild(body);
+    mFoot.innerHTML='';
+    const s=document.createElement('button');s.className='btn';s.type='button';s.textContent=secondary;s.onclick=closeModal;mFoot.appendChild(s);
+    if(primary){const p=document.createElement('button');p.className='btn primary';p.type='button';p.textContent=primary;p.onclick=()=>{if(onPrimary&&onPrimary()===false)return;closeModal()};mFoot.appendChild(p)}
+    dim.classList.add('on');dim.setAttribute('aria-hidden','false');
+    if(onOpen)onOpen();
+    setTimeout(()=>{const f=mFoot.querySelector('.btn.primary')||mFoot.querySelector('.btn');(mBody.querySelector('textarea,input')||f).focus()},30);
+  }
+  function closeModal(){dim.classList.remove('on');dim.setAttribute('aria-hidden','true');if(onClose)onClose();if(lastFocus&&lastFocus.focus)lastFocus.focus()}
+  $('#mClose').onclick=closeModal;
+  dim.addEventListener('click',e=>{if(e.target===dim)closeModal()});
+  document.addEventListener('keydown',e=>{
+    if(!dim.classList.contains('on'))return;
+    if(e.key==='Escape'){e.preventDefault();closeModal();return}
+    if(e.key==='Tab'){const f=$$('button,input,textarea,[tabindex]:not([tabindex="-1"])',dim.querySelector('.modal')).filter(x=>!x.disabled&&x.offsetParent!==null);if(!f.length)return;const a=f[0],z=f[f.length-1];if(e.shiftKey&&document.activeElement===a){e.preventDefault();z.focus()}else if(!e.shiftKey&&document.activeElement===z){e.preventDefault();a.focus()}}
+  });
+  const toastEl=$('#toast');let tt;
+  function toast(m){toastEl.textContent=m;toastEl.classList.add('on');clearTimeout(tt);tt=setTimeout(()=>toastEl.classList.remove('on'),2400)}
+
+  /* ---------- state ---------- */
+  const KEY='goheung-hs-council-v1', SCHEMA='goheung-hs-council', VERSION=1;
+  const blank=()=>({schema:SCHEMA,version:VERSION,savedAt:null,notice:'',memos:[],decisions:{cut:'',social:'',survey:''}});
+  let state=blank(); let remoteOn=false;
+  try{const raw=localStorage.getItem(KEY);if(raw){const p=JSON.parse(raw);if(!validate(p).length)state=p}}catch(e){}
+  const els={notice:$('#notice'),cut:$('#d-cut'),social:$('#d-social'),survey:$('#d-survey')};
+  function persist(fromRemote){if(!fromRemote)state.savedAt=new Date().toISOString();try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){}renderSaved();renderNotice();if(!fromRemote)pushRemote()}
+  let pushRemote=()=>{};
+  function renderSaved(){const el=$('#savedAt');if(!state.savedAt){el.textContent='아직 저장된 내용이 없어요.';return}const d=new Date(state.savedAt);el.textContent='마지막 저장 '+d.toLocaleString('ko-KR',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'})+(remoteOn?' · 파이어베이스에 저장됨':' · 이 브라우저에만 저장돼요')}
+  function renderNotice(){const t=state.notice.trim();$('#noticeBar').classList.toggle('on',!!t);$('#noticeText').textContent=t}
+  function renderMemos(){
+    const ul=$('#memoList');
+    if(!state.memos.length){ul.innerHTML='<li class="empty" style="background:none;display:block">아직 메모가 없어요.</li>';return}
+    ul.innerHTML=state.memos.map(m=>'<li><div><p>'+esc(m.text)+'</p><small>'+new Date(m.createdAt).toLocaleString('ko-KR',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'})+'</small></div><button class="ib" type="button" data-del="'+esc(m.id)+'" aria-label="메모 삭제" data-tip="메모 삭제"><svg class="ic"><use href="#i-trash"/></svg></button></li>').join('');
+    $$('[data-del]',ul).forEach(b=>b.onclick=()=>{
+      const id=b.dataset.del;
+      modal({title:'이 메모를 지울까요?',icon:'trash',body:'<p>지운 메모는 되돌릴 수 없어요.</p>',primary:'지우기',onPrimary:()=>{state.memos=state.memos.filter(m=>m.id!==id);persist();renderMemos();toast('메모를 지웠어요')}});
+    });
+  }
+  function fill(){els.notice.value=state.notice;els.cut.value=state.decisions.cut;els.social.value=state.decisions.social;els.survey.value=state.decisions.survey;renderMemos();renderSaved();renderNotice()}
+  let deb;
+  const bind=(el,set)=>el.addEventListener('input',()=>{set(el.value);clearTimeout(deb);deb=setTimeout(persist,400)});
+  bind(els.notice,v=>state.notice=v);
+  bind(els.cut,v=>state.decisions.cut=v);
+  bind(els.social,v=>state.decisions.social=v);
+  bind(els.survey,v=>state.decisions.survey=v);
+  function addMemo(){const inp=$('#newMemo'),v=inp.value.trim();if(!v){inp.focus();return}state.memos.unshift({id:'m'+Date.now().toString(36)+Math.random().toString(36).slice(2,6),text:v,createdAt:new Date().toISOString()});inp.value='';persist();renderMemos()}
+  $('#addMemo').onclick=addMemo;
+  $('#newMemo').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.isComposing){e.preventDefault();addMemo()}});
+
+  /* ---------- schema validation ---------- */
+  function isISO(s){return typeof s==='string'&&/^\d{4}-\d{2}-\d{2}T/.test(s)&&!isNaN(Date.parse(s))}
+  function validate(o){
+    const E=[];
+    if(!o||typeof o!=='object'||Array.isArray(o)){return['최상위 값이 객체({ … })가 아니에요.']}
+    const allowed=['schema','version','savedAt','notice','memos','decisions'];
+    Object.keys(o).forEach(k=>{if(!allowed.includes(k))E.push('알 수 없는 항목 "'+k+'"이 있어요.')});
+    if(o.schema!==SCHEMA)E.push('schema 값이 "'+SCHEMA+'"이어야 해요.');
+    if(o.version!==VERSION)E.push('version은 '+VERSION+'이어야 해요. (지금: '+JSON.stringify(o.version)+')');
+    if(!(o.savedAt===null||o.savedAt===undefined||isISO(o.savedAt)))E.push('savedAt은 날짜·시간 문자열(ISO 형식)이거나 null이어야 해요.');
+    if(typeof o.notice!=='string')E.push('notice(공지사항)는 문자열이어야 해요.');else if(o.notice.length>2000)E.push('notice는 2,000자 이하여야 해요.');
+    if(!Array.isArray(o.memos))E.push('memos는 배열([ … ])이어야 해요.');
+    else{
+      if(o.memos.length>200)E.push('memos는 200개 이하여야 해요.');
+      const ids=new Set();
+      o.memos.forEach((m,i)=>{
+        const p='memos['+i+']';
+        if(!m||typeof m!=='object'||Array.isArray(m)){E.push(p+'이 객체가 아니에요.');return}
+        if(typeof m.id!=='string'||!m.id)E.push(p+'.id는 비어 있지 않은 문자열이어야 해요.');else if(ids.has(m.id))E.push(p+'.id "'+m.id+'"가 중복돼요.');else ids.add(m.id);
+        if(typeof m.text!=='string'||!m.text.trim())E.push(p+'.text는 비어 있지 않은 문자열이어야 해요.');else if(m.text.length>1000)E.push(p+'.text는 1,000자 이하여야 해요.');
+        if(!isISO(m.createdAt))E.push(p+'.createdAt은 날짜·시간 문자열(ISO 형식)이어야 해요.');
+        Object.keys(m).forEach(k=>{if(!['id','text','createdAt'].includes(k))E.push(p+'에 알 수 없는 항목 "'+k+'"이 있어요.')});
+      });
+    }
+    if(!o.decisions||typeof o.decisions!=='object'||Array.isArray(o.decisions))E.push('decisions는 객체여야 해요.');
+    else ['cut','social','survey'].forEach(k=>{const v=o.decisions[k];if(typeof v!=='string')E.push('decisions.'+k+'는 문자열이어야 해요.');else if(v.length>2000)E.push('decisions.'+k+'는 2,000자 이하여야 해요.')});
+    return E;
+  }
+
+  /* ---------- export ---------- */
+  function exportJSON(){
+    const data=JSON.stringify({...state,savedAt:state.savedAt||new Date().toISOString()},null,2);
+    const name='협의회-메모-'+new Date().toISOString().slice(0,10)+'.json';
+    try{
+      const url=URL.createObjectURL(new Blob([data],{type:'application/json'}));
+      const a=document.createElement('a');a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();
+      setTimeout(()=>URL.revokeObjectURL(url),2000);toast('JSON 파일을 내려받았어요');
+    }catch(e){toast('파일을 만들지 못했어요')}
+  }
+  $('#btnExport').onclick=exportJSON; $('#sideExport').onclick=()=>{closeDrawer();exportJSON()};
+
+  /* ---------- import ---------- */
+  function importJSON(){
+    const box=document.createElement('div');
+    box.innerHTML='<p>내보낸 JSON 파일을 고르거나 내용을 붙여 넣으세요. 불러오면 지금 적힌 메모·공지·결정 내용이 모두 바뀌어요.</p>'+
+      '<div class="drop"><input type="file" accept=".json,application/json" aria-label="JSON 파일 선택"><textarea rows="7" placeholder="{ &quot;schema&quot;: &quot;goheung-hs-council&quot;, … }" aria-label="JSON 붙여넣기" style="font-size:13px"></textarea></div><ul class="errs" aria-live="polite"></ul>';
+    const file=box.querySelector('input'),ta=box.querySelector('textarea'),errs=box.querySelector('.errs');
+    file.addEventListener('change',()=>{const f=file.files[0];if(!f)return;if(f.size>1024*1024){show(['파일이 너무 커요. 1MB 이하 JSON만 불러올 수 있어요.']);return}const r=new FileReader();r.onload=()=>{ta.value=String(r.result);errs.innerHTML=''};r.onerror=()=>show(['파일을 읽지 못했어요.']);r.readAsText(f,'utf-8')});
+    const show=a=>{errs.innerHTML=a.slice(0,12).map(x=>'<li>'+esc(x)+'</li>').join('')+(a.length>12?'<li>외 '+(a.length-12)+'개 오류</li>':'')};
+    modal({title:'JSON 불러오기',icon:'up',body:box,primary:'확인하고 불러오기',onPrimary:()=>{
+      const txt=ta.value.trim();
+      if(!txt){show(['불러올 내용이 없어요. 파일을 고르거나 붙여 넣어 주세요.']);return false}
+      let o;try{o=JSON.parse(txt)}catch(e){show(['JSON 형식이 올바르지 않아요: '+e.message]);return false}
+      const E=validate(o);if(E.length){show(E);return false}
+      setTimeout(()=>modal({title:'지금 내용을 덮어쓸까요?',icon:'alert',body:'<p>메모 '+o.memos.length+'개와 공지·결정 내용을 불러와 지금 내용을 바꿔요. 되돌릴 수 없으니 필요하면 먼저 내보내기를 해 두세요.</p>',primary:'덮어쓰기',onPrimary:()=>{state=o;persist();fill();toast('불러왔어요')}}),0);
+    }});
+  }
+  $('#btnImport').onclick=importJSON; $('#sideImport').onclick=()=>{closeDrawer();importJSON()};
+  $('#btnClear').onclick=()=>modal({title:'모두 지울까요?',icon:'trash',body:'<p>공지사항, 메모, 협의 결정 내용을 모두 지워요. 되돌릴 수 없어요.</p>',primary:'모두 지우기',onPrimary:()=>{state=blank();persist();fill();toast('모두 지웠어요')}});
+
+  /* ---------- Google Sheets (공개 집계 CSV) ---------- */
+  const CFG=window.APP_CONFIG||{};
+  const chip=(id,txt,cls)=>{const c=$(id);c.classList.remove('ok','err');if(cls)c.classList.add(cls);c.querySelector('span').textContent=txt};
+  function parseCSV(t){const rows=[];let row=[],f='',q=false;for(let i=0;i<t.length;i++){const c=t[i];if(q){if(c==='"'){if(t[i+1]==='"'){f+='"';i++}else q=false}else f+=c}else if(c==='"')q=true;else if(c===','){row.push(f);f=''}else if(c==='\n'||c==='\r'){if(c==='\r'&&t[i+1]==='\n')i++;row.push(f);rows.push(row);row=[];f=''}else f+=c}if(f||row.length){row.push(f);rows.push(row)}return rows}
+  async function loadSheet(manual){
+    if(!CFG.sheetCsvUrl){chip('#chipSheet','시트 미연결');if(manual)toast('시트 주소가 설정되지 않았어요');return}
+    chip('#chipSheet','시트 불러오는 중');
+    try{
+      const r=await fetch(CFG.sheetCsvUrl+(CFG.sheetCsvUrl.includes('?')?'&':'?')+'t='+Date.now(),{cache:'no-store'});
+      if(!r.ok)throw new Error('HTTP '+r.status);
+      const rows=parseCSV(await r.text());
+      if(!rows.length||rows[0][0]!=='key')throw new Error('공개 집계 탭 형식이 아니에요');
+      const m={};rows.slice(1).forEach(x=>{if(x[0])m[x[0].trim()]=(x[1]||'').trim()});
+      $$('[data-k]').forEach(el=>{const v=m[el.dataset.k];if(v!==undefined&&v!=='')el.textContent=v});
+      $$('.bar-row[data-vk]').forEach(r=>{const v=parseFloat(m[r.dataset.vk]);if(!isNaN(v))r.dataset.v=v;if(r.dataset.mk){const mm=parseFloat(m[r.dataset.mk]);if(!isNaN(mm))r.dataset.m=mm}});
+      if(slides[cur].id==='s-status')animate('#bars .bar-row',r=>r.dataset.v/r.dataset.m);
+      chip('#chipSheet','시트 '+(m.updated?m.updated.slice(5).replace('-','.'):'연결됨'),'ok');
+      if(manual)toast('시트 집계를 새로 불러왔어요');
+    }catch(e){chip('#chipSheet','시트 오류','err');if(manual)toast('시트를 불러오지 못했어요: '+e.message)}
+  }
+  $('#btnRefresh').onclick=()=>loadSheet(true);
+  loadSheet(false);
+  if(CFG.sheetCsvUrl)setInterval(()=>loadSheet(false),Math.max(1,CFG.sheetRefreshMinutes||5)*60000);
+
+  /* ---------- Firebase (Firestore 실시간 저장) ---------- */
+  async function connectFirebase(){
+    if(!CFG.firebase||!CFG.firebase.projectId){chip('#chipDb','이 브라우저');return}
+    chip('#chipDb','연결 중');
+    try{
+      const V='10.12.2';
+      const {initializeApp}=await import('https://www.gstatic.com/firebasejs/'+V+'/firebase-app.js');
+      const F=await import('https://www.gstatic.com/firebasejs/'+V+'/firebase-firestore.js');
+      const db=F.getFirestore(initializeApp(CFG.firebase));
+      const ref=F.doc(db,'councils',String(CFG.room||'default'));
+      let t;
+      pushRemote=()=>{clearTimeout(t);t=setTimeout(()=>{
+        const payload={schema:SCHEMA,version:VERSION,savedAt:state.savedAt,notice:state.notice,memos:state.memos,decisions:state.decisions};
+        F.setDoc(ref,payload).then(()=>chip('#chipDb','실시간 저장','ok')).catch(e=>{chip('#chipDb','저장 실패','err');toast('파이어베이스 저장 실패: '+(e.code||e.message))});
+      },600)};
+      F.onSnapshot(ref,snap=>{
+        remoteOn=true;chip('#chipDb','실시간 저장','ok');
+        if(snap.metadata.hasPendingWrites)return;
+        if(!snap.exists()){if(state.savedAt)pushRemote();return}
+        const o=snap.data();
+        if(validate(o).length){toast('서버의 메모 형식이 올바르지 않아 무시했어요');return}
+        if(state.savedAt&&o.savedAt&&Date.parse(o.savedAt)<Date.parse(state.savedAt))return;
+        const active=document.activeElement;
+        state=o;persist(true);
+        if(active!==els.notice)els.notice.value=state.notice;
+        if(active!==els.cut)els.cut.value=state.decisions.cut;
+        if(active!==els.social)els.social.value=state.decisions.social;
+        if(active!==els.survey)els.survey.value=state.decisions.survey;
+        renderMemos();
+      },e=>{chip('#chipDb','연결 오류','err');toast('파이어베이스 연결 오류: '+(e.code||e.message))});
+    }catch(e){chip('#chipDb','연결 오류','err');toast('파이어베이스를 불러오지 못했어요')}
+  }
+  connectFirebase();
+
+  fill();
+  function fromHash(){const k=slides.findIndex(s=>'#'+s.id===location.hash);go(k<0?0:k,true)}
+  window.addEventListener('hashchange',fromHash);
+  fromHash();
+})();
+</script>
+</body>
+</html>

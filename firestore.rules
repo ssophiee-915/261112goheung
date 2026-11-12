@@ -1,0 +1,23 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // 협의회 메모 문서: councils/{방 이름}
+    match /councils/{room} {
+      allow read: if true;
+      allow write: if request.resource.data.keys().hasOnly(['schema', 'version', 'savedAt', 'notice', 'memos', 'decisions'])
+        && request.resource.data.schema == 'goheung-hs-council'
+        && request.resource.data.version == 1
+        && request.resource.data.notice is string
+        && request.resource.data.notice.size() <= 2000
+        && request.resource.data.memos is list
+        && request.resource.data.memos.size() <= 200
+        && request.resource.data.decisions is map;
+    }
+
+    // 그 밖의 모든 경로는 막아 둡니다.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
